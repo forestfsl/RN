@@ -3,7 +3,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '11.0'
 
-target 'ximalaya' do
+target 'AwesomeProject3' do
   config = use_native_modules!
 
   use_react_native!(
@@ -12,7 +12,7 @@ target 'ximalaya' do
     :hermes_enabled => false
   )
 
-  target 'ximalayaTests' do
+  target 'AwesomeProject3Tests' do
     inherit! :complete
     # Pods for testing
   end
@@ -26,16 +26,5 @@ target 'ximalaya' do
   post_install do |installer|
     react_native_post_install(installer)
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
-    installer.pods_project.targets.each do |target|
-         if (target.name&.eql?('FBReactNativeSpec'))
-           target.build_phases.each do |build_phase|
-             if (build_phase.respond_to?(:name) && build_phase.name.eql?('[CP-User] Generate Specs'))
-               target.build_phases.move(build_phase, 0)
-             end
-           end
-         end
-    end
   end
 end
-
-
