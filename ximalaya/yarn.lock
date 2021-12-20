@@ -1476,6 +1476,46 @@
   "resolved" "https://registry.nlark.com/@react-native/polyfills/download/@react-native/polyfills-2.0.0.tgz"
   "version" "2.0.0"
 
+"@react-navigation/core@^6.1.0":
+  "integrity" "sha1-lfv1TXitDtl2y3MhnwwBmXdaHSY="
+  "resolved" "https://registry.npmmirror.com/@react-navigation/core/download/@react-navigation/core-6.1.0.tgz"
+  "version" "6.1.0"
+  dependencies:
+    "@react-navigation/routers" "^6.1.0"
+    "escape-string-regexp" "^4.0.0"
+    "nanoid" "^3.1.23"
+    "query-string" "^7.0.0"
+    "react-is" "^16.13.0"
+
+"@react-navigation/elements@^1.2.1":
+  "integrity" "sha1-hvGXgcbzSlyd0l3KmZFeAwb0d9E="
+  "resolved" "https://registry.npmmirror.com/@react-navigation/elements/download/@react-navigation/elements-1.2.1.tgz"
+  "version" "1.2.1"
+
+"@react-navigation/native-stack@^6.2.5":
+  "integrity" "sha1-v6GVFs9DT4MebUuijTK5vFQ20YE="
+  "resolved" "https://registry.npmmirror.com/@react-navigation/native-stack/download/@react-navigation/native-stack-6.2.5.tgz"
+  "version" "6.2.5"
+  dependencies:
+    "@react-navigation/elements" "^1.2.1"
+    "warn-once" "^0.1.0"
+
+"@react-navigation/native@^6.0.0", "@react-navigation/native@^6.0.6":
+  "integrity" "sha1-DyV3NY1z17If9bJFXwotUbGtKDc="
+  "resolved" "https://registry.npmmirror.com/@react-navigation/native/download/@react-navigation/native-6.0.6.tgz"
+  "version" "6.0.6"
+  dependencies:
+    "@react-navigation/core" "^6.1.0"
+    "escape-string-regexp" "^4.0.0"
+    "nanoid" "^3.1.23"
+
+"@react-navigation/routers@^6.1.0":
+  "integrity" "sha1-1Wgr6I8et4CVJ8SPnNPe3080TkA="
+  "resolved" "https://registry.npmmirror.com/@react-navigation/routers/download/@react-navigation/routers-6.1.0.tgz"
+  "version" "6.1.0"
+  dependencies:
+    "nanoid" "^3.1.23"
+
 "@sideway/address@^4.1.3":
   "integrity" "sha512-8ncEUtmnTsMmL7z1YPB47kPUq7LpKWJNFPsRzHiIajGC5uXlWGn+AmkYPcHNl8S4tcEGx+cnORnNYaw2wvL+LQ=="
   "resolved" "https://registry.npmmirror.com/@sideway/address/download/@sideway/address-4.1.3.tgz"
@@ -3239,6 +3279,11 @@
   "version" "7.0.1"
   dependencies:
     "to-regex-range" "^5.0.1"
+
+"filter-obj@^1.1.0":
+  "integrity" "sha1-mzERErxsYSehbgFsbF1/GeCAXFs="
+  "resolved" "https://registry.npmmirror.com/filter-obj/download/filter-obj-1.1.0.tgz"
+  "version" "1.1.0"
 
 "finalhandler@1.1.2":
   "integrity" "sha1-t+fQAP/RGTjQ/bBTUG9uur6fWH0="
@@ -5126,6 +5171,11 @@
   "resolved" "https://registry.npmmirror.com/ms/download/ms-2.1.2.tgz"
   "version" "2.1.2"
 
+"nanoid@^3.1.23":
+  "integrity" "sha512-zJpuPDwOv8D2zq2WRoMe1HsfZthVewpel9CAvTfc/2mBD1uUT/agc5f7GHGWXlYkFvi1mVxe4IjvP2HNrop7nQ=="
+  "resolved" "https://registry.npmmirror.com/nanoid/download/nanoid-3.1.30.tgz"
+  "version" "3.1.30"
+
 "nanomatch@^1.2.9":
   "integrity" "sha1-uHqKpPwN6P5r6IiVs4mD/yZb0Rk="
   "resolved" "https://registry.npm.taobao.org/nanomatch/download/nanomatch-1.2.13.tgz"
@@ -5673,6 +5723,16 @@
   "resolved" "https://registry.npm.taobao.org/punycode/download/punycode-2.1.1.tgz"
   "version" "2.1.1"
 
+"query-string@^7.0.0":
+  "integrity" "sha1-Rb0UnPWGqqWC3/x+x6itl90C910="
+  "resolved" "https://registry.npmmirror.com/query-string/download/query-string-7.0.1.tgz"
+  "version" "7.0.1"
+  dependencies:
+    "decode-uri-component" "^0.2.0"
+    "filter-obj" "^1.1.0"
+    "split-on-first" "^1.0.0"
+    "strict-uri-encode" "^2.0.0"
+
 "range-parser@~1.2.1":
   "integrity" "sha1-PPNwI9GZ4cJNGlW4SADC8+ZGgDE="
   "resolved" "https://registry.npm.taobao.org/range-parser/download/range-parser-1.2.1.tgz"
@@ -5686,10 +5746,20 @@
     "shell-quote" "^1.6.1"
     "ws" "^7"
 
+"react-freeze@^1.0.0":
+  "integrity" "sha1-shxl/heDdDAHyMmilSsciHmnc1Q="
+  "resolved" "https://registry.npmmirror.com/react-freeze/download/react-freeze-1.0.0.tgz?cache=0&sync_timestamp=1635752493672&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Freact-freeze%2Fdownload%2Freact-freeze-1.0.0.tgz"
+  "version" "1.0.0"
+
 "react-is@^16.12.0 || ^17.0.0", "react-is@^17.0.1", "react-is@^17.0.2":
   "integrity" "sha1-5pHUqOnHiTZWVVOas3J2Kw77VPA="
   "resolved" "https://registry.npmmirror.com/react-is/download/react-is-17.0.2.tgz"
   "version" "17.0.2"
+
+"react-is@^16.13.0":
+  "integrity" "sha1-eJcppNw23imZ3BVt1sHZwYzqVqQ="
+  "resolved" "https://registry.npmmirror.com/react-is/download/react-is-16.13.1.tgz"
+  "version" "16.13.1"
 
 "react-is@^16.8.1":
   "integrity" "sha1-eJcppNw23imZ3BVt1sHZwYzqVqQ="
@@ -5709,6 +5779,19 @@
   "integrity" "sha1-b+WJVBC3XkT+T0vwDKr4lKCYHzo="
   "resolved" "https://registry.npmmirror.com/react-native-config/download/react-native-config-1.4.5.tgz"
   "version" "1.4.5"
+
+"react-native-safe-area-context@^3.3.2", "react-native-safe-area-context@>= 3.0.0":
+  "integrity" "sha1-lUmizlgPI3TtsF5J1mEljRuLyu0="
+  "resolved" "https://registry.npmmirror.com/react-native-safe-area-context/download/react-native-safe-area-context-3.3.2.tgz"
+  "version" "3.3.2"
+
+"react-native-screens@^3.10.1", "react-native-screens@>= 3.0.0":
+  "integrity" "sha512-ZF/XHnRsuinvDY1XiCWLXxoUoSf+NgsAes2SZfX9rFQQcv128zmh/+19SSavGrSf6rQNzqytEMdRGI6yr4Gbjw=="
+  "resolved" "https://registry.npmmirror.com/react-native-screens/download/react-native-screens-3.10.1.tgz"
+  "version" "3.10.1"
+  dependencies:
+    "react-freeze" "^1.0.0"
+    "warn-once" "^0.1.0"
 
 "react-native@*", "react-native@0.66.3":
   "integrity" "sha512-B/dQpuvta9YvF5MihDWefoGlTvxzUHK5X5RjdrXHAu/ihTehJXxEA+m6z/tufp1ZUMDjU+tMZK6gnehzCuYfzw=="
@@ -5770,7 +5853,7 @@
     "react-shallow-renderer" "^16.13.1"
     "scheduler" "^0.20.2"
 
-"react@^16.0.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0", "react@17.0.2":
+"react@*", "react@^16.0.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0", "react@^17.0.0", "react@17.0.2":
   "integrity" "sha1-0LXMUW0p6z7uOD91tihkz7aAADc="
   "resolved" "https://registry.npmmirror.com/react/download/react-17.0.2.tgz"
   "version" "17.0.2"
@@ -6356,6 +6439,11 @@
   "resolved" "https://registry.npmmirror.com/spdx-license-ids/download/spdx-license-ids-3.0.11.tgz"
   "version" "3.0.11"
 
+"split-on-first@^1.0.0":
+  "integrity" "sha1-9hCv7uOxK84dDDBCXnY5i3gkml8="
+  "resolved" "https://registry.npmmirror.com/split-on-first/download/split-on-first-1.1.0.tgz?cache=0&sync_timestamp=1632753436524&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fsplit-on-first%2Fdownload%2Fsplit-on-first-1.1.0.tgz"
+  "version" "1.1.0"
+
 "split-string@^3.0.1", "split-string@^3.0.2":
   "integrity" "sha1-fLCd2jqGWFcFxks5pkZgOGguj+I="
   "resolved" "https://registry.npm.taobao.org/split-string/download/split-string-3.1.0.tgz"
@@ -6404,6 +6492,11 @@
   "integrity" "sha1-kdX1Ew0c75bc+n9yaUUYh0HQnuQ="
   "resolved" "https://registry.npm.taobao.org/stream-buffers/download/stream-buffers-2.2.0.tgz"
   "version" "2.2.0"
+
+"strict-uri-encode@^2.0.0":
+  "integrity" "sha1-ucczDHBChi9rFC3CdLvMWGbONUY="
+  "resolved" "https://registry.npmmirror.com/strict-uri-encode/download/strict-uri-encode-2.0.0.tgz"
+  "version" "2.0.0"
 
 "string_decoder@~1.1.1":
   "integrity" "sha1-nPFhG6YmhdcDCunkujQUnDrwP8g="
@@ -6904,6 +6997,11 @@
   "version" "1.0.8"
   dependencies:
     "makeerror" "1.0.12"
+
+"warn-once@^0.1.0":
+  "integrity" "sha1-T1jYm4T5aNA4kXaqmeDPDxT/1Mg="
+  "resolved" "https://registry.npmmirror.com/warn-once/download/warn-once-0.1.0.tgz"
+  "version" "0.1.0"
 
 "wcwidth@^1.0.1":
   "integrity" "sha1-8LDc+RW8X/FSivrbLA4XtTLaL+g="
