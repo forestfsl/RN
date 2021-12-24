@@ -4,12 +4,14 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
-import Home from '@/pages/Home';
+import BottomTabs  from "@/navigator/BottomTabs";
 import Detail from '@/pages/Detail';
 import {Platform, StyleSheet} from 'react-native';
 
 export type RootStackParamList = {
-  Home: undefined;
+  BottomTabs: {
+      screen?: string;
+  };
   Detail: {
     id: number;
   };
@@ -41,9 +43,8 @@ class Navigator extends React.Component {
             },
           }}>
           <Stack.Screen
-            options={{headerTitleAlign: 'left', headerTitle: '首页'}}
-            name={'Home'}
-            component={Home}
+            name={'BottomTabs'}
+            component={BottomTabs}
           />
           <Stack.Screen name={'Detail'} component={Detail} />
         </Stack.Navigator>
