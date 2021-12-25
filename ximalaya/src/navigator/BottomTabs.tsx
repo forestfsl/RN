@@ -5,7 +5,7 @@ import Listen from '@/pages/Listen';
 import Account from '@/pages/Account';
 import Found from '@/pages/Found';
 import {RootStackNavigation, RootStackParamList} from '@/navigator/index';
-import {RouteProp, TabNavigationState} from '@react-navigation/native';
+import {getFocusedRouteNameFromRoute, RouteProp, TabNavigationState} from '@react-navigation/native';
 
 export type BottomTabParamList = {
   Home: undefined;
@@ -36,11 +36,10 @@ interface IProps {
   };
 }
 
-class BottomTabs extends React.Component<IProps> {
+class BottomTabs extends React.Component<IProps, any> {
   componentDidMount() {
     const {navigation, route} = this.props;
-    const routeName = route.state
-      ? route.state.routes[route.state.index].name
+    const routeName = getFocusedRouteNameFromRoute(route) ? getFocusedRouteNameFromRoute(route)
       : route.params
       ? route.params.screen
       : 'Home';
@@ -58,8 +57,7 @@ class BottomTabs extends React.Component<IProps> {
   }
   componentDidUpdate() {
     const {navigation, route} = this.props;
-    const routeName = route.state
-      ? route.state.routes[route.state.index].name
+    const routeName = getFocusedRouteNameFromRoute(route) ? getFocusedRouteNameFromRoute(route)
       : route.params
       ? route.params.screen
       : 'Home';
