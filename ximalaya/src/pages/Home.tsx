@@ -1,8 +1,19 @@
 import React from 'react';
 import {Button, Text, View} from 'react-native';
 import {RootStackNavigation} from '@/navigator/index';
+import {RootState} from '@/models/index';
+import {connect, ConnectedProps} from 'react-redux';
 
-interface IProps {
+const mapStateToProps = ({home, loading}: RootState) => ({
+  num: home.num,
+  loading: loading.effects['home/asyncAdd'],
+});
+
+const connector = connect(mapStateToProps);
+
+type MadelState = ConnectedProps<typeof connector>;
+
+interface IProps extends MadelState {
   navigation: RootStackNavigation;
 }
 
@@ -14,14 +25,38 @@ class Home extends React.Component<IProps> {
     });
   };
 
+  add = () => {
+    const {dispatch} = this.props;
+    dispatch({
+      type: 'home/add',
+      payload: {
+        num: 10,
+      },
+    });
+  };
+
+  asyncAdd = () => {
+    const {dispatch} = this.props;
+    dispatch({
+      type: 'home/asyncAdd',
+      payload: {
+        num: 2,
+      },
+    });
+  };
+
   render() {
+    const {num, loading} = this.props;
     return (
       <View>
-        <Text>Home</Text>
+        <Text>Home{num}</Text>
+        <Text>{loading ? '正在努力计算中' : ''}</Text>
+        <Button title="加" onPress={this.add} />
+        <Button title="异步加" onPress={this.asyncAdd} />
         <Button title={'跳转到详情页'} onPress={this.onPress} />
       </View>
     );
   }
 }
 
-export default Home;
+export default connector(Home);

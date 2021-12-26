@@ -16,5 +16,18 @@
 //
 // export default App;
 import Navigator from './navigator';
+import React from 'react';
+import {Provider} from 'react-redux';
+import store from '@/config/dva';
 
-export default Navigator;
+export default class extends React.Component<any, any> {
+  render() {
+    return (
+      <Provider store={store}>
+        <Navigator />
+      </Provider>
+    );
+  }
+}
+
+// export default Navigator;
