@@ -5,10 +5,15 @@ import Listen from '@/pages/Listen';
 import Account from '@/pages/Account';
 import Found from '@/pages/Found';
 import {RootStackNavigation, RootStackParamList} from '@/navigator/index';
-import {getFocusedRouteNameFromRoute, RouteProp, TabNavigationState} from '@react-navigation/native';
+import {
+  getFocusedRouteNameFromRoute,
+  RouteProp,
+  TabNavigationState,
+} from '@react-navigation/native';
+import HomeTabs from './HomeTabs';
 
 export type BottomTabParamList = {
-  Home: undefined;
+  HomeTabs: undefined;
   Listen: undefined;
   Found: undefined;
   Account: undefined;
@@ -16,7 +21,7 @@ export type BottomTabParamList = {
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 function getHeaderTitle(routeName: string | undefined) {
   switch (routeName) {
-    case 'Home':
+    case 'HomeTabs':
       return '首页';
     case 'Listen':
       return '我听';
@@ -39,14 +44,16 @@ interface IProps {
 class BottomTabs extends React.Component<IProps, any> {
   componentDidMount() {
     const {navigation, route} = this.props;
-    const routeName = getFocusedRouteNameFromRoute(route) ? getFocusedRouteNameFromRoute(route)
+    const routeName = getFocusedRouteNameFromRoute(route)
+      ? getFocusedRouteNameFromRoute(route)
       : route.params
       ? route.params.screen
-      : 'Home';
+      : 'HomeTabs';
     if (routeName === 'HomeTabs') {
       navigation.setOptions({
-        headerTitle: '',
-        headerTransparent: true,
+        headerTitle: '首页',
+        // headerTintColor:'#000000',
+        headerTransparent: false,
       });
     } else {
       navigation.setOptions({
@@ -57,10 +64,11 @@ class BottomTabs extends React.Component<IProps, any> {
   }
   componentDidUpdate() {
     const {navigation, route} = this.props;
-    const routeName = getFocusedRouteNameFromRoute(route) ? getFocusedRouteNameFromRoute(route)
+    const routeName = getFocusedRouteNameFromRoute(route)
+      ? getFocusedRouteNameFromRoute(route)
       : route.params
       ? route.params.screen
-      : 'Home';
+      : 'HomeTabs';
     navigation.setOptions({
       headerTitle: getHeaderTitle(routeName),
     });
@@ -74,8 +82,8 @@ class BottomTabs extends React.Component<IProps, any> {
           headerShown: false,
         }}>
         <Tab.Screen
-          name="Home"
-          component={Home}
+          name="HomeTabs"
+          component={HomeTabs}
           options={{tabBarLabel: '首页'}}
         />
         <Tab.Screen
