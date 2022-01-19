@@ -3,6 +3,7 @@ import {Button, Text, View} from 'react-native';
 import {RootStackNavigation} from '@/navigator/index';
 import {RootState} from '@/models/index';
 import {connect, ConnectedProps} from 'react-redux';
+import Carousel from './Carousel';
 
 const mapStateToProps = ({home, loading}: RootState) => ({
   num: home.num,
@@ -54,6 +55,7 @@ class Home extends React.Component<IProps> {
         <Button title="加" onPress={this.add} />
         <Button title="异步加" onPress={this.asyncAdd} />
         <Button title={'跳转到详情页'} onPress={this.onPress} />
+        <Carousel />
       </View>
     );
   }
