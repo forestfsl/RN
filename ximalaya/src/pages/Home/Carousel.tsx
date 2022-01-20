@@ -3,9 +3,11 @@ import {hp} from '@/utils/';
 import {wp} from '@/utils/';
 import {viewportWidth} from '@/utils/';
 import React from 'react';
-import {Image, StyleSheet} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import SnapCarousel, {
   AdditionalParallaxProps,
+  Pagination,
+  ParallaxImage,
 } from 'react-native-snap-carousel';
 
 const data = [
@@ -21,32 +23,100 @@ const sideHeigt = hp(26);
 const itemWidth = sideWidth + wp(2) * 0.2;
 
 class Carousel extends React.Component {
+  state = {
+    activeSlide: 0,
+  };
+
+  onSnapToItem = (index: number) => {
+    this.setState({
+      activeSlide: index,
+    });
+  };
+
   renderItem = (
     {item}: {item: string},
     parallaxProps?: AdditionalParallaxProps,
   ) => {
     // console.log(item);
     // console.log(styles.image);
-    return <Image source={{uri: item}} style={styles.image} />;
+    return (
+      <ParallaxImage
+        source={{uri: item}}
+        style={styles.image}
+        containerStyle={styles.imageContainer}
+        showSpinner
+        spinnerColor="rgba(0,0,0,0.25)"
+        {...parallaxProps}
+      />
+    );
   };
+
+  get pagination() {
+    const {activeSlide} = this.state;
+    return (
+      <View style={styles.paginationWrapper}>
+        <Pagination
+          containerStyle={styles.paginationContainer}
+          dotContainerStyle={styles.dotContainer}
+          dotStyle={styles.dot}
+          activeDotIndex={activeSlide}
+          dotsLength={data.length}
+          inactiveDotScale={0.8}
+          inactiveDotOpacity={0.4}
+        />
+      </View>
+    );
+  }
   render() {
     //   console.log(sliderWidth);
-    //   console.log(itemWidth);
+    console.log(itemWidth);
     return (
-      <SnapCarousel
-        data={data}
-        renderItem={this.renderItem}
-        sliderWidth={sliderWidth}
-        itemWidth={itemWidth}
-      />
+      <View>
+        <SnapCarousel
+          data={data}
+          renderItem={this.renderItem}
+          sliderWidth={sliderWidth}
+          itemWidth={itemWidth}
+          hasParallaxImages
+          onSnapToItem={this.onSnapToItem}
+          loop
+          autoplay
+        />
+        {this.pagination}
+      </View>
     );
   }
 }
 //网络过来的地址，一定要有宽高的
 const styles = StyleSheet.create({
-  image: {
+  paginationWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  paginationContainer: {
+    position: 'absolute',
+    top: -20,
+    backgroundColor: 'rgba(0,0,0,0.35)',
+    paddingHorizontal: 3,
+    paddingVertical: 4,
+  },
+  dotContainer: {
+    marginHorizontal: 8,
+  },
+  imageContainer: {
     width: sideWidth,
     height: sideHeigt,
+    borderRadius: 8,
+  },
+  dot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: 'rgba(255,255,255,0.92)',
+  },
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    resizeMode: 'cover',
   },
 });
 
