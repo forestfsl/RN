@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ICarousel } from '@/models/home';
+import {ICarousel} from '@/models/home';
 import {hp, viewportWidth, wp} from '@/utils/';
 import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
