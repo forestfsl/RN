@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {hp} from '@/utils/';
-import {wp} from '@/utils/';
-import {viewportWidth} from '@/utils/';
+import { ICarousel } from '@/models/home';
+import {hp, viewportWidth, wp} from '@/utils/';
 import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import SnapCarousel, {
@@ -10,19 +9,23 @@ import SnapCarousel, {
   ParallaxImage,
 } from 'react-native-snap-carousel';
 
-const data = [
-  'https://www.tanmizhi.com/img/882.jpg',
-  'https://www.tanmizhi.com/img/882.jpg',
-  'https://www.tanmizhi.com/img/882.jpg',
-  'https://www.tanmizhi.com/img/882.jpg',
-];
+// const data = [
+//   'https://www.tanmizhi.com/img/882.jpg',
+//   'https://www.tanmizhi.com/img/882.jpg',
+//   'https://www.tanmizhi.com/img/882.jpg',
+//   'https://www.tanmizhi.com/img/882.jpg',
+// ];
 
 const sliderWidth = viewportWidth;
 const sideWidth = wp(90);
 const sideHeigt = hp(26);
 const itemWidth = sideWidth + wp(2) * 0.2;
 
-class Carousel extends React.Component {
+interface IProps {
+  data: ICarousel[];
+}
+
+class Carousel extends React.Component<IProps> {
   state = {
     activeSlide: 0,
   };
@@ -34,14 +37,14 @@ class Carousel extends React.Component {
   };
 
   renderItem = (
-    {item}: {item: string},
+    {item}: {item: ICarousel},
     parallaxProps?: AdditionalParallaxProps,
   ) => {
     // console.log(item);
     // console.log(styles.image);
     return (
       <ParallaxImage
-        source={{uri: item}}
+        source={{uri: item.image}}
         style={styles.image}
         containerStyle={styles.imageContainer}
         showSpinner
@@ -53,6 +56,7 @@ class Carousel extends React.Component {
 
   get pagination() {
     const {activeSlide} = this.state;
+    const {data} = this.props;
     return (
       <View style={styles.paginationWrapper}>
         <Pagination
@@ -69,7 +73,8 @@ class Carousel extends React.Component {
   }
   render() {
     //   console.log(sliderWidth);
-    console.log(itemWidth);
+    // console.log(itemWidth);
+    const {data} = this.props;
     return (
       <View>
         <SnapCarousel

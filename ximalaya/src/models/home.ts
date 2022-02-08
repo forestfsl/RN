@@ -1,53 +1,61 @@
 import {Effect, Model} from 'dva-core-ts';
 import {Reducer} from 'react';
+import axios from 'axios';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import {string} from 'prop-types';
+
+const CAROUSEl_URL = '/mock/11/forest/carousel';
+
+export interface ICarousel {
+  id: string;
+  image: string;
+  colors: [string, string];
+}
 
 interface HomeState {
-  num: number;
+  carousels: ICarousel[];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const action = {
-  type: 'add',
+  type: 'setState',
 };
 
 interface HomeModel extends Model {
   namespace: 'home';
   state: HomeState;
   reducers: {
-    add: Reducer<HomeState, any>;
+    setState: Reducer<HomeState, any>;
   };
   effects: {
-    asyncAdd: Effect;
+    fetchCarousel: Effect;
   };
 }
 
 const initialState = {
-  num: 1,
+  carousels: [],
 };
-
-function delay(timeout: number) {
-  return new Promise(reslove => {
-    setTimeout(reslove, timeout);
-  });
-}
 
 const homeModel: HomeModel = {
   namespace: 'home',
   state: initialState,
   reducers: {
-    add(state = initialState, {payload}) {
+    setState(state = initialState, {payload}) {
       return {
         ...state,
-        num: state.num + payload.num,
+        ...payload,
       };
     },
   },
   effects: {
-    *asyncAdd({payload}, {call, put}) {
-      yield call(delay, 3000);
+    *fetchCarousel(_, {call, put}) {
+      const {data} = yield call(axios.get, CAROUSEl_URL);
+      console.log('轮播图数据', data);
       yield put({
-        type: 'add',
-        payload,
+        type: 'setState',
+        payload: {
+          carousels: data,
+        },
       });
     },
   },
