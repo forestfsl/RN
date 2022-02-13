@@ -10,6 +10,9 @@ const CAROUSEl_URL = '/mock/11/forest/carousel';
 //猜你喜欢
 const GUESS_URL = '/mock/11/forest/guess';
 
+//首页列表
+const CHAANEL_URL = '/mock/11/forest/channel';
+
 export interface ICarousel {
   id: string;
   image: string;
@@ -22,9 +25,19 @@ export interface IGUESS {
   title: string;
 }
 
+export interface IChannel {
+  id: string;
+  title: string;
+  image: string;
+  remark: string;
+  played: number;
+  playing: number;
+}
+
 interface HomeState {
   carousels: ICarousel[];
   guess: IGUESS[];
+  channels: IChannel[];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -41,12 +54,14 @@ interface HomeModel extends Model {
   effects: {
     fetchCarousel: Effect;
     fetchGuess: Effect;
+    fetchChannels: Effect;
   };
 }
 
-const initialState = {
+const initialState: HomeState = {
   carousels: [],
   guess: [],
+  channels: [],
 };
 
 const homeModel: HomeModel = {
@@ -68,6 +83,16 @@ const homeModel: HomeModel = {
         type: 'setState',
         payload: {
           carousels: data,
+        },
+      });
+    },
+    *fetchChannels(_, {call, put}) {
+      const {data} = yield call(axios.get, CHAANEL_URL);
+      // console.log('列表数据', data);
+      yield put({
+        type: 'setState',
+        payload: {
+          channels: data.results,
         },
       });
     },

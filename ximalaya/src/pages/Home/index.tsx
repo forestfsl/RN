@@ -1,15 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import {View} from 'react-native';
+import {FlatList, View, ScrollView, ListRenderItemInfo} from 'react-native';
 import {RootStackNavigation} from '@/navigator/index';
 import {RootState} from '@/models/index';
 import {connect, ConnectedProps} from 'react-redux';
 import Carousel from './Carousel';
 import Guess from './Guess';
-import { ScrollView } from 'react-native-gesture-handler';
+import {Text} from 'react-native-svg';
+import ChannelItem from './ChannelItem';
+import {ICarousel, IChannel} from '@/models/home';
 
 const mapStateToProps = ({home, loading}: RootState) => ({
   carousels: home.carousels,
   guess: home.guess,
+  channels: home.channels,
   loading: loading.effects['home/fetchCarousel'],
 });
 
@@ -26,6 +30,9 @@ class Home extends React.Component<IProps> {
     const {dispatch} = this.props;
     dispatch({
       type: 'home/fetchCarousel',
+    });
+    dispatch({
+      type: 'home/fetchChannels',
     });
   }
 
@@ -56,13 +63,33 @@ class Home extends React.Component<IProps> {
     });
   };
 
-  render() {
-    const {carousels} = this.props;
+  renderItem = ({item}: ListRenderItemInfo<IChannel>) => {
+    return <ChannelItem data={item} />;
+  };
+
+  get header() {
+    const {carousels, channels} = this.props;
     return (
-      <ScrollView>
+      <View>
         <Carousel data={carousels} />
         <Guess />
-      </ScrollView>
+      </View>
+    );
+  }
+
+  render() {
+    const {carousels, channels} = this.props;
+    // console.log(channels);
+    // console.log(typeof channels);
+    // console.log(typeof carousels);
+    // console.log(channels.length);
+    // console.log(carousels.length);
+    return (
+      <FlatList
+        ListHeaderComponent={this.header}
+        data={channels}
+        renderItem={this.renderItem}
+      />
     );
   }
 }
