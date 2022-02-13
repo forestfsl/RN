@@ -36,11 +36,8 @@ class Home extends React.Component<IProps> {
     });
   }
 
-  onPress = () => {
-    const {navigation} = this.props;
-    navigation.navigate('Detail', {
-      id: 100,
-    });
+  onPress = (data: IChannel) => {
+    console.log(data);
   };
 
   add = () => {
@@ -63,8 +60,13 @@ class Home extends React.Component<IProps> {
     });
   };
 
+  //帮助函数生成一个不重复的key，可以指定刷新的key，减少重复的key
+  keyExtractor = (item: IChannel) => {
+    return item.id;
+  };
+
   renderItem = ({item}: ListRenderItemInfo<IChannel>) => {
-    return <ChannelItem data={item} />;
+    return <ChannelItem data={item} onPress={this.onPress} />;
   };
 
   get header() {
@@ -89,6 +91,7 @@ class Home extends React.Component<IProps> {
         ListHeaderComponent={this.header}
         data={channels}
         renderItem={this.renderItem}
+        keyExtractor={this.keyExtractor}
       />
     );
   }
