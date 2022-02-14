@@ -10,10 +10,11 @@ interface IProps {
   onPress: (data: IChannel) => void;
 }
 
-class ChannelItem extends React.PureComponent<IProps> {
+class ChannelItem extends React.Component<IProps> {
   //业务代码分离，调用父组件的函数即可
   onPress = () => {
     const {onPress, data} = this.props;
+    console.log('点击了按钮');
     if (typeof onPress === 'function') {
       onPress(data);
     }

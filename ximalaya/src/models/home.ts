@@ -3,6 +3,7 @@ import {Reducer} from 'react';
 import axios from 'axios';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {string} from 'prop-types';
+import {RootState} from '.';
 
 //轮播图
 const CAROUSEl_URL = '/mock/11/forest/carousel';
@@ -34,10 +35,17 @@ export interface IChannel {
   playing: number;
 }
 
+export interface IPagination {
+  current: number;
+  total: number;
+  hasMore: boolean;
+}
+
 interface HomeState {
   carousels: ICarousel[];
   guess: IGUESS[];
   channels: IChannel[];
+  pagination: IPagination;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -62,6 +70,11 @@ const initialState: HomeState = {
   carousels: [],
   guess: [],
   channels: [],
+  pagination: {
+    current: 1,
+    total: 0,
+    hasMore: true,
+  },
 };
 
 const homeModel: HomeModel = {
@@ -86,15 +99,40 @@ const homeModel: HomeModel = {
         },
       });
     },
-    *fetchChannels(_, {call, put}) {
-      const {data} = yield call(axios.get, CHAANEL_URL);
+    *fetchChannels({callback, payload}, {call, put, select}) {
+      const {channels, pagination} = yield select(
+        (state: RootState) => state.home,
+      );
+      // console.log('xxxxxxxxxxxxxxx');
+      let page = 1;
+      if (payload && payload.loadMore) {
+        page = pagination.current + 1;
+        console.log(page);
+      }
+      const {data} = yield call(axios.get, CHAANEL_URL, {
+        params: {
+          page,
+        },
+      });
+      let newChannels = data.results;
+      if (payload && payload.loadMore) {
+        newChannels = channels.concat(newChannels);
+      }
       // console.log('列表数据', data);
       yield put({
         type: 'setState',
         payload: {
-          channels: data.results,
+          channels: newChannels,
+          pagination: {
+            current: data.pagination.current,
+            total: data.pagination.total,
+            hasMore: newChannels.length < pagination.total,
+          },
         },
       });
+      if (typeof callback === 'function') {
+        callback();
+      }
     },
     *fetchGuess(_, {call, put}) {
       // console.log('YYYYYYY');
