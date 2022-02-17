@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import Touchable from '@/components/Touchable';
+import {RootState} from '@/models/index';
 import {
   MaterialTopTabBar,
   MaterialTopTabBarProps,
@@ -7,22 +8,33 @@ import {
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {getStatusBarHeight} from 'react-native-iphone-x-helper';
-import {LinearGradient} from 'react-native-linear-gradient';
+import LinearGradient from 'react-native-linear-gradient';
+import {connect, ConnectedProps} from 'react-redux';
 
-interface IProps extends MaterialTopTabBarProps {}
+const mapStateToProps = ({home}: RootState) => {
+  return {
+    linearColors: home.carousels
+      ? home.carousels[home.activeCarouselIndex].colors
+      : undefined,
+  };
+};
+
+const connector = connect(mapStateToProps);
+type ModelState = ConnectedProps<typeof connector>;
+
+type IProps = MaterialTopTabBarProps & ModelState;
 
 class TopTabBarWrapper extends React.Component<IProps> {
-//   get gradient() {
-//     return <LinearGradient />;
-//   }
+  get gradient() {
+    const {linearColors = ['#ccc', '#e2e2e2']} = this.props;
+    return <LinearGradient colors={linearColors} style={styles.gradient} />;
+  }
 
- 
   render() {
     let textStyle = styles.blackText;
     return (
       <View style={styles.container}>
-        {/* {this.gradient} */}
-
+        {this.gradient}
         <View style={styles.topTabBarView}>
           <View style={styles.tabbar}>
             <MaterialTopTabBar
@@ -42,7 +54,7 @@ class TopTabBarWrapper extends React.Component<IProps> {
           <Touchable style={styles.search}>
             <Text style={textStyle}>搜索按钮</Text>
           </Touchable>
-          <Touchable style={styles.history} onPress={this.goHistory}>
+          <Touchable style={styles.history}>
             <Text style={textStyle}>历史记录</Text>
           </Touchable>
         </View>
@@ -98,4 +110,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TopTabBarWrapper;
+export default connector(TopTabBarWrapper);
