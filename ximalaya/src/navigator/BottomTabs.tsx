@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from '@/assets/iconfont/index';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '@/pages/Home';
 import Listen from '@/pages/Listen';
@@ -43,6 +44,13 @@ interface IProps {
 
 class BottomTabs extends React.Component<IProps, any> {
   componentDidMount() {
+    this.setOptions();
+  }
+  componentDidUpdate() {
+    this.setOptions();
+  }
+
+  setOptions = () => {
     const {navigation, route} = this.props;
     const routeName = getFocusedRouteNameFromRoute(route)
       ? getFocusedRouteNameFromRoute(route)
@@ -51,9 +59,8 @@ class BottomTabs extends React.Component<IProps, any> {
       : 'HomeTabs';
     if (routeName === 'HomeTabs') {
       navigation.setOptions({
-        headerTitle: '首页',
-        // headerTintColor:'#000000',
-        headerTransparent: false,
+        headerTitle: '',
+        headerTransparent: true,
       });
     } else {
       navigation.setOptions({
@@ -61,18 +68,7 @@ class BottomTabs extends React.Component<IProps, any> {
         headerTransparent: false,
       });
     }
-  }
-  componentDidUpdate() {
-    const {navigation, route} = this.props;
-    const routeName = getFocusedRouteNameFromRoute(route)
-      ? getFocusedRouteNameFromRoute(route)
-      : route.params
-      ? route.params.screen
-      : 'HomeTabs';
-    navigation.setOptions({
-      headerTitle: getHeaderTitle(routeName),
-    });
-  }
+  };
 
   render() {
     return (
@@ -84,22 +80,42 @@ class BottomTabs extends React.Component<IProps, any> {
         <Tab.Screen
           name="HomeTabs"
           component={HomeTabs}
-          options={{tabBarLabel: '首页'}}
+          options={{
+            tabBarLabel: '首页',
+            tabBarIcon: ({color, size}) => (
+              <Icon name="icon-shouye" color={color} size={size} />
+            ),
+          }}
         />
         <Tab.Screen
           name="Listen"
           component={Listen}
-          options={{tabBarLabel: '我听'}}
+          options={{
+            tabBarLabel: '我听',
+            tabBarIcon: ({color, size}) => (
+              <Icon name="icon-shoucang" color={color} size={size} />
+            ),
+          }}
         />
         <Tab.Screen
           name="Found"
           component={Found}
-          options={{tabBarLabel: '发现'}}
+          options={{
+            tabBarLabel: '发现',
+            tabBarIcon: ({color, size}) => (
+              <Icon name="icon-faxian" color={color} size={size} />
+            ),
+          }}
         />
         <Tab.Screen
           name="Account"
           component={Account}
-          options={{tabBarLabel: '我的'}}
+          options={{
+            tabBarLabel: '我的',
+            tabBarIcon: ({color, size}) => (
+              <Icon name="icon-user" color={color} size={size} />
+            ),
+          }}
         />
       </Tab.Navigator>
     );
