@@ -1,13 +1,16 @@
+/* eslint-disable no-shadow */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {ICarousel} from '@/models/home';
+import {RootState} from '@/models/index';
+import home, {ICarousel} from '@/models/home';
 import {hp, viewportWidth, wp} from '@/utils/';
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import SnapCarousel, {
   AdditionalParallaxProps,
   Pagination,
   ParallaxImage,
 } from 'react-native-snap-carousel';
+import {connect, ConnectedProps} from 'react-redux';
 
 // const data = [
 //   'https://www.tanmizhi.com/img/882.jpg',
@@ -21,18 +24,25 @@ const sideWidth = wp(90);
 const sideHeigt = hp(26);
 const itemWidth = sideWidth + wp(2) * 0.2;
 
-interface IProps {
-  data: ICarousel[];
-}
+const mapStateToProps = ({home}: RootState) => ({
+  data: home.carousels,
+  activeCrouseIndex: home.activeCarouselIndex,
+});
+
+const connector = connect(mapStateToProps);
+
+type MadelState = ConnectedProps<typeof connector>;
+
+interface IProps extends MadelState {}
 
 class Carousel extends React.Component<IProps> {
-  state = {
-    activeSlide: 0,
-  };
-
   onSnapToItem = (index: number) => {
-    this.setState({
-      activeSlide: index,
+    const {dispatch} = this.props;
+    dispatch({
+      type: 'home/setState',
+      payload: {
+        activeCarouselIndex: index,
+      },
     });
   };
 
@@ -55,15 +65,14 @@ class Carousel extends React.Component<IProps> {
   };
 
   get pagination() {
-    const {activeSlide} = this.state;
-    const {data} = this.props;
+    const {data, activeCrouseIndex} = this.props;
     return (
       <View style={styles.paginationWrapper}>
         <Pagination
           containerStyle={styles.paginationContainer}
           dotContainerStyle={styles.dotContainer}
           dotStyle={styles.dot}
-          activeDotIndex={activeSlide}
+          activeDotIndex={activeCrouseIndex}
           dotsLength={data.length}
           inactiveDotScale={0.8}
           inactiveDotOpacity={0.4}
@@ -126,4 +135,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Carousel;
+export default connector(Carousel);

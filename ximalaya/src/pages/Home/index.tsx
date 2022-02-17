@@ -85,10 +85,9 @@ class Home extends React.Component<IProps, IState> {
   };
 
   get header() {
-    const {carousels, channels} = this.props;
     return (
       <View>
-        <Carousel data={carousels} />
+        <Carousel />
         <Guess />
       </View>
     );
@@ -171,16 +170,16 @@ class Home extends React.Component<IProps, IState> {
     return (
       <FlatList
         ListHeaderComponent={this.header}
-        // ListFooterComponent={this.footer}
-        // ListEmptyComponent={this.empty}
+        ListFooterComponent={this.footer}
+        ListEmptyComponent={this.empty}
         data={channels}
         // data={[]} 测试暂无数据的
         renderItem={this.renderItem}
         keyExtractor={this.keyExtractor}
-        // onRefresh={this.onRefresh}
-        // refreshing={refreshing}
-        // onEndReached={this.onEndReached}
-        // onEndReachedThreshold={0.2}
+        onRefresh={this.onRefresh}
+        refreshing={refreshing}
+        onEndReached={this.onEndReached}
+        onEndReachedThreshold={0.2}
       />
     );
   }
