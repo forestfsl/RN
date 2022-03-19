@@ -44,6 +44,7 @@ export interface IPagination {
 interface HomeState {
   carousels: ICarousel[];
   activeCarouselIndex: number; //当前轮播图的下标
+  gradientVisible: boolean; //渐变色组件是否显示的状态
   guess: IGUESS[];
   channels: IChannel[];
   pagination: IPagination;
@@ -70,6 +71,7 @@ interface HomeModel extends Model {
 const initialState: HomeState = {
   carousels: [],
   activeCarouselIndex: 0,
+  gradientVisible: true,
   guess: [],
   channels: [],
   pagination: {
@@ -92,7 +94,7 @@ const homeModel: HomeModel = {
   },
   effects: {
     *fetchCarousel(_, {call, put}) {
-      console.log('xxxxxxxxxxxxxxx');
+      console.log('xxxxxxxxxxxxxxx轮播');
       const {data} = yield call(axios.get, CAROUSEl_URL);
       console.log('轮播图数据', data);
       yield put({

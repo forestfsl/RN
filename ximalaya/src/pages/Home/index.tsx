@@ -6,11 +6,13 @@ import {
   ScrollView,
   ListRenderItemInfo,
   StyleSheet,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
 } from 'react-native';
 import {RootStackNavigation} from '@/navigator/index';
 import {RootState} from '@/models/index';
 import {connect, ConnectedProps} from 'react-redux';
-import Carousel from './Carousel';
+import Carousel, {sideHeigt} from './Carousel';
 import Guess from './Guess';
 import {Text} from 'react-native';
 import ChannelItem from './ChannelItem';
@@ -22,6 +24,7 @@ const mapStateToProps = ({home, loading}: RootState) => ({
   channels: home.channels,
   loading: loading.effects['home/fetchCarousel'],
   hasMore: home.pagination.hasMore,
+  gradientVisible: home.gradientVisible,
 });
 
 const connector = connect(mapStateToProps);
@@ -88,7 +91,9 @@ class Home extends React.Component<IProps, IState> {
     return (
       <View>
         <Carousel />
-        <Guess />
+        <View style={styles.background}>
+          <Guess />
+        </View>
       </View>
     );
   }
@@ -159,6 +164,20 @@ class Home extends React.Component<IProps, IState> {
     });
   };
 
+  onsScroll = ({nativeEvent}: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const offsetY = nativeEvent.contentOffset.y;
+    let newGradientVisible = offsetY < sideHeigt;
+    const {dispatch, gradientVisible} = this.props;
+    if (gradientVisible !== newGradientVisible) {
+      dispatch({
+        type: 'home/setState',
+        payload: {
+          gradientVisible: newGradientVisible,
+        },
+      });
+    }
+  };
+
   render() {
     const {carousels, channels} = this.props;
     const {refreshing} = this.state;
@@ -180,6 +199,7 @@ class Home extends React.Component<IProps, IState> {
         refreshing={refreshing}
         onEndReached={this.onEndReached}
         onEndReachedThreshold={0.2}
+        onScroll={this.onsScroll}
       />
     );
   }
@@ -197,6 +217,9 @@ const styles = StyleSheet.create({
   empty: {
     alignItems: 'center',
     paddingVertical: 100,
+  },
+  background: {
+    backgroundColor: '#fff',
   },
   footerText: {
     fontSize: 16,

@@ -8,21 +8,35 @@ import {
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {getStatusBarHeight} from 'react-native-iphone-x-helper';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import LinearGradient from 'react-native-linear-gradient';
 import LinearLinearGradientAnimatedGradient from 'react-native-linear-animated-gradient-transition';
 import {connect, ConnectedProps} from 'react-redux';
 
 const mapStateToProps = ({home}: RootState) => {
   console.log('xxxxxxxx');
-  console.log(home.activeCarouselIndex);
-  // console.log(home.carousels[home.activeCarouselIndex].colors);
+  console.log(home.carousels);
+  console.log(home.carousels[home.activeCarouselIndex]);
+  //如果爆出找不到colors，就先注释，成功之后再打开
   // return {
   //   undefined,
   // };
+  // return {
+  //   gradientVisible: home.gradientVisible,
+  //   linearColors: home.carousels
+  //     ? typeof home.carousels[home.activeCarouselIndex] === 'undefined'
+  //       ? ['#ccc', '#e2e2e2']
+  //       : home.carousels[home.activeCarouselIndex].colors
+  //     : undefined,
+  // };
   return {
-    linearColors: home.carousels
-      ? home.carousels[home.activeCarouselIndex].colors
-      : undefined,
+    gradientVisible: home.gradientVisible,
+    linearColors:
+      home.carousels && home.carousels.length > 0
+        ? home.carousels[home.activeCarouselIndex]
+          ? home.carousels[home.activeCarouselIndex].colors
+          : undefined
+        : undefined,
   };
 };
 
@@ -33,27 +47,48 @@ type IProps = MaterialTopTabBarProps & ModelState;
 
 class TopTabBarWrapper extends React.Component<IProps> {
   get gradient() {
-    const {linearColors = ['#ccc', '#e2e2e2']} = this.props;
-    return (
-      <LinearLinearGradientAnimatedGradient
-        colors={linearColors}
-        style={styles.gradient}
-      />
-    );
+    const {gradientVisible, linearColors = ['#ccc', '#e2e2e2']} = this.props;
+    if (gradientVisible) {
+      return (
+        <LinearLinearGradientAnimatedGradient
+          colors={linearColors}
+          style={styles.gradient}
+        />
+      );
+    }
+    return null;
   }
 
   render() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let {
+      gradientVisible,
+      indicatorStyle,
+      inactiveTintColor,
+      ...resetProps
+    } = this.props;
     let textStyle = styles.blackText;
+    let activeTintColor = '#333';
+    if (gradientVisible) {
+      textStyle = styles.text;
+      activeTintColor = '#fff';
+      if (indicatorStyle) {
+        indicatorStyle = StyleSheet.compose(
+          indicatorStyle,
+          styles.whiteBackgroundColor,
+        );
+      }
+    }
     return (
       <View style={styles.container}>
         {this.gradient}
         <View style={styles.topTabBarView}>
           <View style={styles.tabbar}>
             <MaterialTopTabBar
-              {...this.props}
-              //   indicatorStyle={indicatorStyle}
-              //   activeTintColor={activeTintColor}
-              //   inactiveTintColor={inactiveTintColor}
+              {...resetProps}
+              indicatorStyle={indicatorStyle}
+              activeTintColor={activeTintColor}
+              inactiveTintColor={inactiveTintColor}
               style={{backgroundColor: 'transparent'}}
             />
           </View>
@@ -119,6 +154,9 @@ const styles = StyleSheet.create({
   },
   blackText: {
     color: '#333',
+  },
+  whiteBackgroundColor: {
+    backgroundColor: '#fff',
   },
 });
 
