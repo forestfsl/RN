@@ -7,7 +7,7 @@ interface IProps {
   isEdit: boolean;
   selected: boolean;
   data: ICategory;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 const parentWidth = viewportWidth - 10;
