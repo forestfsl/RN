@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 // import {
@@ -15,11 +16,13 @@ import {
 import BottomTabs from '@/navigator/BottomTabs';
 import Detail from '@/pages/Detail';
 import {Platform, StatusBar, StatusBarIOS, StyleSheet} from 'react-native';
+import Category from '@/pages/Category';
 
 export type RootStackParamList = {
   BottomTabs: {
     screen?: string;
   };
+  Category: undefined;
   Detail: {
     id: number;
   };
@@ -43,7 +46,13 @@ class Navigator extends React.Component {
             headerStyleInterpolator: HeaderStyleInterpolators.forUIKit,
             cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             gestureEnabled: true,
-            headerStatusBarHeight: StatusBar.currentHeight,
+            ...Platform.select({
+              android: {
+                headerStatusBarHeight: StatusBar.currentHeight,
+              },
+            }),
+            headerBackTitleVisible: false,
+            headerTintColor: '#333',
             // @ts-ignore
             headerStyle: {
               // backgroundColor: 'red',
@@ -62,6 +71,14 @@ class Navigator extends React.Component {
             options={({route}) => ({
               headerTitle: route.name,
               // header:() => {},
+            })}
+          />
+          <Stack.Screen
+            key="Category"
+            name={'Category'}
+            component={Category}
+            options={({route}) => ({
+              headerTitle: '分类',
             })}
           />
           <Stack.Screen name={'Detail'} component={Detail} />
