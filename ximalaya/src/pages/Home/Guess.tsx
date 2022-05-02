@@ -16,21 +16,25 @@ const connector = connect(mapStateToProps);
 
 type ModelState = ConnectedProps<typeof connector>;
 
-class Guess extends React.Component<ModelState> {
+interface IProps extends ModelState {
+  namespace: string;
+}
+
+class Guess extends React.Component<IProps> {
   componentDidMount() {
-    const {dispatch} = this.props;
-    dispatch({
-      type: 'home/fetchGuess',
-    });
+    this.fetch();
   }
 
   changeBatch = () => {
-    const {dispatch} = this.props;
-    dispatch({
-      type: 'home/fetchGuess',
-    });
+    this.fetch();
   };
 
+  fetch = () => {
+    const {dispatch, namespace} = this.props;
+    dispatch({
+      type: namespace + 'fetchGuess',
+    });
+  };
   renderItem = ({item}: {item: IGUESS}) => {
     // console.log(item);
     return (

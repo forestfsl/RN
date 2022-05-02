@@ -3,6 +3,7 @@ import Touchable from '@/components/Touchable';
 import {RootState} from '@/models/index';
 import {
   MaterialTopTabBar,
+  MaterialTopTabBarOptions,
   MaterialTopTabBarProps,
 } from '@react-navigation/material-top-tabs';
 import React from 'react';
@@ -12,11 +13,12 @@ import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 import LinearGradient from 'react-native-linear-gradient';
 import LinearLinearGradientAnimatedGradient from 'react-native-linear-animated-gradient-transition';
 import {connect, ConnectedProps} from 'react-redux';
+import {getActiveRouteName} from '@/utils/index';
 
-const mapStateToProps = ({home}: RootState) => {
-  console.log('xxxxxxxx');
-  console.log(home.carousels);
-  console.log(home.carousels[home.activeCarouselIndex]);
+const mapStateToProps = (state: RootState, props: MaterialTopTabBarProps) => {
+  // console.log('xxxxxxxx');
+  // console.log(home.carousels);
+  // console.log(home.carousels[home.activeCarouselIndex]);
   //如果爆出找不到colors，就先注释，成功之后再打开
   // return {
   //   undefined,
@@ -29,12 +31,14 @@ const mapStateToProps = ({home}: RootState) => {
   //       : home.carousels[home.activeCarouselIndex].colors
   //     : undefined,
   // };
+  const routeName = getActiveRouteName(props.state);
+  const modelState = state[routeName];
   return {
-    gradientVisible: home.gradientVisible,
+    gradientVisible: modelState.gradientVisible,
     linearColors:
-      home.carousels && home.carousels.length > 0
-        ? home.carousels[home.activeCarouselIndex]
-          ? home.carousels[home.activeCarouselIndex].colors
+      modelState.carousels && modelState.carousels.length > 0
+        ? modelState.carousels[modelState.activeCarouselIndex]
+          ? modelState.carousels[modelState.activeCarouselIndex].colors
           : undefined
         : undefined,
   };

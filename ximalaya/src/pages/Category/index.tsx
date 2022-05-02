@@ -61,7 +61,7 @@ class Category extends React.Component<IProps, IState> {
     });
   }
   onSubmit = () => {
-    const {dispatch} = this.props;
+    const {dispatch, navigation, isEdit} = this.props;
     const {myCategorys} = this.state;
     dispatch({
       type: 'category/toggle',
@@ -69,6 +69,9 @@ class Category extends React.Component<IProps, IState> {
         myCategorys,
       },
     });
+    if (isEdit) {
+      navigation.goBack();
+    }
   };
   onLongPress = () => {
     const {dispatch} = this.props;

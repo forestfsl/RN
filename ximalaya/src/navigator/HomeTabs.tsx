@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import {
@@ -8,14 +9,52 @@ import {
 import Home from '@/pages/Home';
 import {StyleSheet, View} from 'react-native';
 import TopTabBarWrapper from '@/pages/views/TopTabBarWrapper';
+import {RootState} from '../models';
+import {connect, ConnectedProps} from 'react-redux';
+import {ICategory} from '@/models/category';
+import {createHomeModel} from '@/config/dva';
 
-const Tab = createMaterialTopTabNavigator();
+export type HomeParamList = {
+  [key: string]: {
+    namespace: string;
+  };
+};
 
-class HomeTabs extends React.Component {
+const Tab = createMaterialTopTabNavigator<HomeParamList>();
+
+const mapStateToProps = ({category}: RootState) => {
+  return {
+    myCategorys: category.myCategorys,
+  };
+};
+
+const connector = connect(mapStateToProps);
+
+type ModelState = ConnectedProps<typeof connector>;
+
+interface IProps extends ModelState {}
+
+class HomeTabs extends React.Component<IProps> {
   renderTabBar = (props: MaterialTopTabBarProps) => {
     return <TopTabBarWrapper {...props} />;
   };
+
+  renderScreen = (item: ICategory) => {
+    createHomeModel(item.id);
+    return (
+      <Tab.Screen
+        key={item.id}
+        name={item.id}
+        component={Home}
+        options={{tabBarLabel: item.name}}
+        initialParams={{
+          namespace: item.id,
+        }}
+      />
+    );
+  };
   render() {
+    const {myCategorys} = this.props;
     return (
       <Tab.Navigator
         lazy
@@ -36,11 +75,7 @@ class HomeTabs extends React.Component {
           activeTintColor: '#f86442',
           inactiveTintColor: '#333333',
         }}>
-        <Tab.Screen
-          name="Home"
-          component={Home}
-          options={{tabBarLabel: '推荐'}}
-        />
+        {myCategorys.map(this.renderScreen)}
         {/* <Tab.Screen name="Home1" component={Home} />
         <Tab.Screen name="Home2" component={Home} /> */}
       </Tab.Navigator>
@@ -54,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeTabs;
+export default connector(HomeTabs);
