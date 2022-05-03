@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, RouteProp} from '@react-navigation/native';
 // import {
 //   createNativeStackNavigator,
 //   NativeStackNavigationProp,
@@ -17,16 +17,50 @@ import BottomTabs from '@/navigator/BottomTabs';
 import Detail from '@/pages/Detail';
 import {Platform, StatusBar, StatusBarIOS, StyleSheet} from 'react-native';
 import Category from '@/pages/Category';
+import Album from '@/pages/Album';
+import Animated from 'react-native-reanimated';
 
 export type RootStackParamList = {
   BottomTabs: {
     screen?: string;
   };
   Category: undefined;
+  Album: {
+    item: {
+      id: string;
+      title: string;
+      image: string;
+    };
+  };
   Detail: {
     id: number;
   };
 };
+
+function getAlbumOptions({
+  route,
+}: {
+  route: RouteProp<RootStackParamList, 'Album'>;
+}) {
+  return {
+    headerTitle: route.params.item.title,
+    headerTransparent: true,
+    headerTitleStyle: {
+      opacity: 0,
+    },
+    headerBackground: () => {
+      return <Animated.View style={styles.headerBackground} />;
+    },
+  };
+}
+
+const styles = StyleSheet.create({
+  headerBackground: {
+    flex: 1,
+    backgroundColor: '#fff',
+    opacity: 0,
+  },
+});
 export type RootStackNavigation = StackNavigationProp<RootStackParamList>;
 let Stack = createStackNavigator<RootStackParamList>();
 /*
@@ -80,6 +114,12 @@ class Navigator extends React.Component {
             options={({route}) => ({
               headerTitle: '分类',
             })}
+          />
+          <Stack.Screen
+            key="Album"
+            name={'Album'}
+            component={Album}
+            options={getAlbumOptions}
           />
           <Stack.Screen name={'Detail'} component={Detail} />
         </Stack.Navigator>

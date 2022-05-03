@@ -16,7 +16,7 @@ import Carousel, {sideHeigt} from './Carousel';
 import Guess from './Guess';
 import {Text} from 'react-native';
 import ChannelItem from './ChannelItem';
-import {ICarousel, IChannel} from '@/models/home';
+import {ICarousel, IChannel, IGUESS} from '@/models/home';
 import {RouteProp} from '@react-navigation/native';
 import {HomeParamList} from '@/navigator/HomeTabs';
 
@@ -63,9 +63,11 @@ class Home extends React.Component<IProps, IState> {
     });
   }
 
-  onPress = (data: IChannel) => {
+  goAlbum = (data: IChannel | IGUESS) => {
     console.log(data);
     console.log('-----------------');
+    const {navigation} = this.props;
+    navigation.navigate('Album', {item: data});
   };
 
   add = () => {
@@ -94,7 +96,7 @@ class Home extends React.Component<IProps, IState> {
   };
 
   renderItem = ({item}: ListRenderItemInfo<IChannel>) => {
-    return <ChannelItem data={item} onPress={this.onPress} />;
+    return <ChannelItem data={item} onPress={this.goAlbum} />;
   };
 
   get header() {
@@ -103,7 +105,7 @@ class Home extends React.Component<IProps, IState> {
       <View>
         <Carousel />
         <View style={styles.background}>
-          <Guess namespace={namespace} />
+          <Guess namespace={namespace} goAlbum={this.goAlbum} />
         </View>
       </View>
     );
