@@ -9,11 +9,11 @@ interface IProps {
 class Detail extends React.Component<IProps> {
   render() {
     // @ts-ignore
-    const {route} = this.props;
+    // const {route} = this.props;
     return (
       <View>
         <Text>Detail</Text>
-        <Text>{route.params.id}</Text>
+        {/* <Text>{route.params.id}</Text> */}
       </View>
     );
   }

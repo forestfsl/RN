@@ -55,6 +55,8 @@ class Home extends React.Component<IProps, IState> {
   };
   componentDidMount() {
     const {dispatch, namespace} = this.props;
+    console.log(namespace);
+    console.log('zzzzzzzzzzzzz');
     dispatch({
       type: namespace + '/fetchCarousel',
     });
@@ -114,7 +116,7 @@ class Home extends React.Component<IProps, IState> {
   get footer() {
     const {hasMore, loading, channels} = this.props;
     console.log(hasMore, loading);
-    console.log('footer---------');
+    // console.log('footer---------');
     if (!hasMore) {
       return (
         <View style={styles.end}>
@@ -194,7 +196,7 @@ class Home extends React.Component<IProps, IState> {
   render() {
     const {carousels, channels} = this.props;
     const {refreshing} = this.state;
-    // console.log(channels);
+    console.log(channels);
     // console.log(typeof channels);
     // console.log(typeof carousels);
     // console.log(channels.length);

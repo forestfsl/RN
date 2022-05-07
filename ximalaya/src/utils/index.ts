@@ -1,13 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {Dimensions} from 'react-native';
+import {Dimensions, StatusBar} from 'react-native';
 import {NavigationState} from '@react-navigation/native';
 
 const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
+
+const statusBarHeight = StatusBar.currentHeight;
 
 //根据百分比获取宽度
 function wp(percentage: number) {
   const value = (percentage * viewportWidth) / 100;
   return Math.round(value);
+}
+
+function getTimeString(seconds: number) {
+  const m = parseInt((seconds % (60 * 60)) / 60 + '', 10);
+  const s = parseInt((seconds % 60) + '', 10);
+
+  return (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
 }
 
 function hp(percentage: number) {
@@ -24,4 +33,12 @@ function getActiveRouteName(state: NavigationState) {
   return route.name;
 }
 
-export {viewportWidth, viewportHeight, wp, hp, getActiveRouteName};
+export {
+  statusBarHeight,
+  viewportWidth,
+  viewportHeight,
+  wp,
+  hp,
+  getActiveRouteName,
+  getTimeString,
+};
