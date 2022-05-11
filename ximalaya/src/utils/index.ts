@@ -12,7 +12,7 @@ function wp(percentage: number) {
   return Math.round(value);
 }
 
-function getTimeString(seconds: number) {
+function formatTime(seconds: number) {
   const m = parseInt((seconds % (60 * 60)) / 60 + '', 10);
   const s = parseInt((seconds % 60) + '', 10);
 
@@ -40,5 +40,5 @@ export {
   wp,
   hp,
   getActiveRouteName,
-  getTimeString,
+  formatTime,
 };
