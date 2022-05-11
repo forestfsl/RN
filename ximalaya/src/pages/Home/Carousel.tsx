@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {RootState} from '@/models/index';
 import home, {ICarousel} from '@/models/home';
-import {hp, viewportWidth, wp} from '@/utils/';
+import {hp, viewportWidth, wp} from '@/utils/index';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import SnapCarousel, {

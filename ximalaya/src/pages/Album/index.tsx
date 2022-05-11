@@ -33,6 +33,7 @@ const mapStateToProps = ({album}: RootState) => {
   return {
     summary: album.summary,
     author: album.author,
+    list: album.list,
   };
 };
 
@@ -155,8 +156,18 @@ class Album extends React.Component<IProps> {
   };
 
   onItemPress = (data: IProgram, index: number) => {
-    const {navigation, dispatch} = this.props;
+    const {navigation, dispatch, list} = this.props;
+    const previousItem = list[index - 1];
     navigation.navigate('ListDetail', {id: data.id});
+    const nextItem = list[index + 1];
+    dispatch({
+      type: 'player/setState',
+      payload: {
+        previousId: previousItem ? previousItem.id : '',
+        nextId: nextItem ? nextItem.id : '',
+        sounds: list.map(item => ({id: item.id, title: item.title})),
+      },
+    });
   };
 
   imageLoaded = () => {

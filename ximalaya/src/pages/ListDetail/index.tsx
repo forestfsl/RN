@@ -11,6 +11,7 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
+import Icon from '@/assets/iconfont/index';
 import LinearGradient from 'react-native-linear-gradient';
 import Barrage from '@/components/Barrage';
 import Touchable from '@/components/Touchable';
@@ -24,6 +25,7 @@ import {
 } from '@/navigator/index';
 import {RouteProp} from '@react-navigation/native';
 import {RootState} from '@/models/index';
+import PlaySlider from './PlaySlider';
 
 const IMAGE_WIDTH = 180;
 
@@ -32,6 +34,7 @@ const SCALE = viewportWidth / (IMAGE_WIDTH * 0.9);
 const mapStateToProps = ({player}: RootState) => {
   return {
     soundUrl: player.soundUrl,
+    playState: player.playState,
   };
 };
 
@@ -55,10 +58,46 @@ class ListDetail extends React.Component<IProps> {
       },
     });
   }
+  toogle = () => {
+    const {dispatch, playState} = this.props;
+    dispatch({
+      type: playState === 'playing' ? 'player/pause' : 'player/play',
+    });
+  };
+
+  previous = () => {
+    const {dispatch} = this.props;
+    dispatch({
+      type: 'player/previous',
+    });
+  };
+
+  next = () => {
+    const {dispatch} = this.props;
+    dispatch({
+      type: 'player/next',
+    });
+  };
+
   render() {
+    const {playState} = this.props;
     return (
-      <View>
+      <View style={styles.container}>
         <Text>Detail</Text>
+        <PlaySlider />
+        <View>
+          <Touchable onPress={this.previous}>
+            <Icon name="icon-shangyishou" size={30} color="#fff" />
+          </Touchable>
+        </View>
+        <Touchable onPress={this.toogle}>
+          <Icon name={playState === 'playing' ? 'icon-paste' : 'icon-bofang'} />
+        </Touchable>
+        <View>
+          <Touchable onPress={this.next}>
+            <Icon name="icon-xiayishou" size={30} color="#fff" />
+          </Touchable>
+        </View>
       </View>
     );
   }
@@ -66,6 +105,7 @@ class ListDetail extends React.Component<IProps> {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 100,
     flex: 1,
     backgroundColor: '#807c66',
   },

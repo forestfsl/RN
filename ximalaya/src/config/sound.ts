@@ -19,7 +19,8 @@ const initPlayer = (filepath: string) => {
   });
 };
 
-const playComplete = () => {
+const play = () => {
+  console.log('sxxxxxxxx');
   return new Promise((resolve, reject) => {
     sound.play(success => {
       if (success) {
@@ -29,8 +30,20 @@ const playComplete = () => {
         console.log('playback failed due to audio decoding errors');
         reject();
       }
-      sound.release;
+      // sound.release;
     });
+  });
+};
+
+const pause = () => {
+  return new Promise<void>((resolve, reject) => {
+    if (sound) {
+      sound.pause(() => {
+        resolve();
+      });
+    } else {
+      reject();
+    }
   });
 };
 
@@ -66,4 +79,4 @@ const getDuration = () => {
   return 0;
 };
 
-export {sound, initPlayer, playComplete, stop, getCurrentTime, getDuration};
+export {sound, initPlayer, pause, play, stop, getCurrentTime, getDuration};
