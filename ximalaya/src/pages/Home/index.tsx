@@ -55,8 +55,8 @@ class Home extends React.Component<IProps, IState> {
   };
   componentDidMount() {
     const {dispatch, namespace} = this.props;
-    console.log(namespace);
-    console.log('zzzzzzzzzzzzz');
+    // console.log(namespace);
+    // console.log('zzzzzzzzzzzzz');
     dispatch({
       type: namespace + '/fetchCarousel',
     });
@@ -66,8 +66,8 @@ class Home extends React.Component<IProps, IState> {
   }
 
   goAlbum = (data: IChannel | IGUESS) => {
-    console.log(data);
-    console.log('-----------------');
+    // console.log(data);
+    // console.log('-----------------');
     const {navigation} = this.props;
     navigation.navigate('Album', {item: data});
   };

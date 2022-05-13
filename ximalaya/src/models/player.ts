@@ -19,6 +19,7 @@ const SHOW_URL = '/mock/11/forest/show';
 
 export interface PlayModelState {
   id: string;
+  title: string;
   soundUrl: string;
   playState: string;
   currentTime: number;
@@ -34,7 +35,8 @@ const delay = (timeout: number) =>
 function* currentTime({call, put}: EffectsCommandMap) {
   while (true) {
     yield call(delay, 1000);
-    const currentTime = yield call(getCurrentTime);
+    const currentTime: number = yield call(getCurrentTime);
+    console.log('当前的时间戳', currentTime);
     yield put({
       type: 'setState',
       payload: {
@@ -69,6 +71,7 @@ const initialState: PlayModelState = {
   previousId: '',
   nextId: '',
   sounds: [],
+  title: '',
 };
 
 const playerModel: PlayerModel = {
@@ -87,8 +90,13 @@ const playerModel: PlayerModel = {
       const {data} = yield call(axios.get, SHOW_URL, {
         params: {id: payload.id},
       });
-      console.log('fetchData', data);
-      yield call(initPlayer, data.soundUrl);
+      // console.log('fetchData', data);
+      // yield call(stop);
+      try {
+        yield call(initPlayer, data.soundUrl);
+      } catch (error) {
+        console.log('initPlayer', error);
+      }
       yield put({
         type: 'setState',
         payload: {
@@ -106,9 +114,14 @@ const playerModel: PlayerModel = {
         type: 'setState',
         payload: {
           playState: 'playing',
+          duration: getDuration(),
         },
       });
-      yield call(play);
+      try {
+        yield call(play);
+      } catch (error) {
+        console.log('播放音频失败', error);
+      }
       yield put({
         type: 'setState',
         payload: {
@@ -141,23 +154,24 @@ const playerModel: PlayerModel = {
         ({player}: RootState) => player,
       );
       const index = sounds.findIndex(item => item.id === id);
-      const currentIndex = index - 1;
+      const currentIndex = index > 0 ? index - 1 : 0;
+      const previousIndex = currentIndex > 0 ? currentIndex - 1 : 0;
       const currentItem = sounds[currentIndex];
-      const previousItem = sounds[currentIndex - 1];
+      const previousItem = sounds[previousIndex];
       yield put({
         type: 'setState',
         payload: {
           playState: 'paused',
-          id: currentItem.id,
-          title: currentItem.title,
+          id: currentItem ? currentItem.id : '',
+          title: currentItem ? currentItem.title : '',
           previousId: previousItem ? previousItem.id : '',
-          nextId: id,
+          nextId: id ? id : '',
         },
       });
       yield put({
         type: 'fetchShow',
         payload: {
-          id: currentItem.id,
+          id: currentItem ? currentItem.id : '',
         },
       });
     },
@@ -174,8 +188,8 @@ const playerModel: PlayerModel = {
         type: 'setState',
         payload: {
           playState: 'paused',
-          id: currentItem.id,
-          title: currentItem.title,
+          id: currentItem ? currentItem.id : '',
+          title: currentItem ? currentItem.title : '',
           previousId: id,
           nextId: nextItem ? nextItem.id : '',
         },
@@ -183,7 +197,7 @@ const playerModel: PlayerModel = {
       yield put({
         type: 'fetchShow',
         payload: {
-          id: currentItem.id,
+          id: currentItem ? currentItem.id : '',
         },
       });
     },

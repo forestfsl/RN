@@ -111,8 +111,8 @@ class Category extends React.Component<IProps, IState> {
   };
   onDataChange = (data: ICategory[]) => {
     const {dispatch} = this.props;
-    console.log('zzzzz');
-    console.log(data);
+    // console.log('zzzzz');
+    // console.log(data);
     dispatch({
       type: 'category/setState',
       payload: {

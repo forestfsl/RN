@@ -17,15 +17,16 @@ import Barrage from '@/components/Barrage';
 import Touchable from '@/components/Touchable';
 import {connect, ConnectedProps} from 'react-redux';
 import {viewportWidth, statusBarHeight} from '@/utils/index';
-import PlayBar from './PlayBar';
 import {
   RootStackNavigation,
   ModalStackParamList,
   RootStackParamList,
+  ModalStackNavigation,
 } from '@/navigator/index';
 import {RouteProp} from '@react-navigation/native';
 import {RootState} from '@/models/index';
 import PlaySlider from './PlaySlider';
+import {play} from '@/config/sound';
 
 const IMAGE_WIDTH = 180;
 
@@ -35,6 +36,9 @@ const mapStateToProps = ({player}: RootState) => {
   return {
     soundUrl: player.soundUrl,
     playState: player.playState,
+    title: player.title,
+    previousId: player.previousId,
+    nextId: player.nextId,
   };
 };
 
@@ -43,6 +47,7 @@ const connector = connect(mapStateToProps);
 type ModelState = ConnectedProps<typeof connector>;
 
 interface IProps extends ModelState {
+  navigation: ModalStackNavigation;
   route: RouteProp<ModalStackParamList, 'ListDetail'>;
 }
 /**
@@ -50,14 +55,26 @@ interface IProps extends ModelState {
  */
 class ListDetail extends React.Component<IProps> {
   componentDidMount() {
-    const {dispatch, route} = this.props;
+    const {dispatch, route, navigation, title} = this.props;
     dispatch({
       type: 'player/fetchShow',
       payload: {
         id: route.params.id,
       },
     });
+    navigation.setOptions({
+      headerTitle: title,
+    });
   }
+
+  componentDidUpdate(prevProps: IProps) {
+    if (this.props.title !== prevProps.title) {
+      this.props.navigation.setOptions({
+        headerTitle: this.props.title,
+      });
+    }
+  }
+
   toogle = () => {
     const {dispatch, playState} = this.props;
     dispatch({
@@ -80,20 +97,26 @@ class ListDetail extends React.Component<IProps> {
   };
 
   render() {
-    const {playState} = this.props;
+    const {playState, previousId, nextId} = this.props;
     return (
       <View style={styles.container}>
-        <Text>Detail</Text>
         <PlaySlider />
-        <View>
-          <Touchable onPress={this.previous}>
+        <View style={styles.control}>
+          <Touchable
+            disabled={!previousId}
+            onPress={this.previous}
+            style={styles.button}>
             <Icon name="icon-shangyishou" size={30} color="#fff" />
           </Touchable>
-        </View>
-        <Touchable onPress={this.toogle}>
-          <Icon name={playState === 'playing' ? 'icon-paste' : 'icon-bofang'} />
-        </Touchable>
-        <View>
+          <Touchable
+            disabled={!nextId}
+            onPress={this.toogle}
+            style={styles.button}>
+            <Icon
+              name={playState === 'playing' ? 'icon-paste' : 'icon-bofang'}
+              color="#fff"
+            />
+          </Touchable>
           <Touchable onPress={this.next}>
             <Icon name="icon-xiayishou" size={30} color="#fff" />
           </Touchable>
@@ -108,6 +131,23 @@ const styles = StyleSheet.create({
     paddingTop: 100,
     flex: 1,
     backgroundColor: '#807c66',
+  },
+  control: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 15,
+    marginHorizontal: 90,
+  },
+  // control: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',
+  //   alignItems: 'center',
+  //   marginVertical: 15,
+  //   marginHorizontal: 90,
+  // },
+  button: {
+    marginHorizontal: 10,
   },
   scroll: {
     flex: 1,
@@ -157,13 +197,6 @@ const styles = StyleSheet.create({
     width: IMAGE_WIDTH,
     height: IMAGE_WIDTH,
     borderRadius: 8,
-  },
-  control: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginVertical: 15,
-    marginHorizontal: 90,
   },
   thumb: {
     justifyContent: 'center',

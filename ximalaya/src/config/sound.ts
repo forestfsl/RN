@@ -8,14 +8,21 @@ let sound: Sound;
 const initPlayer = (filepath: string) => {
   return new Promise((resolve, reject) => {
     console.log('-----------initPlayer', filepath);
-    sound = new Sound(filepath, '', error => {
-      if (error) {
-        console.log('failed to load the sound', error);
-        reject(error);
-      } else {
-        resolve(sound);
+    try {
+      if (sound) {
+        sound.release();
       }
-    });
+      sound = new Sound(filepath, '', error => {
+        if (error) {
+          console.log('failed to load the sound', error);
+          reject(error);
+        } else {
+          resolve(sound);
+        }
+      });
+    } catch (error) {
+      console.log('初始化播放器失败', error);
+    }
   });
 };
 
@@ -30,7 +37,6 @@ const play = () => {
         console.log('playback failed due to audio decoding errors');
         reject();
       }
-      // sound.release;
     });
   });
 };
@@ -56,6 +62,7 @@ const stop = () => {
     } else {
       reject();
     }
+    sound.release();
   });
 };
 

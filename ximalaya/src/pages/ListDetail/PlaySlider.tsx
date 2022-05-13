@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import Slider from 'react-native-slider-x';
@@ -19,7 +20,7 @@ const connector = connect(mapStateToProps);
 type ModelState = ConnectedProps<typeof connector>;
 
 interface IProps extends ModelState {
-  route: RouteProp<ModalStackParamList, 'ListDetail'>;
+  // route: RouteProp<ModalStackParamList, 'ListDetail'>;
 }
 
 class PlaySlider extends React.Component<IProps> {
