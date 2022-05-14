@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import Icon from '@/assets/iconfont/index';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -12,10 +13,13 @@ import {
   TabNavigationState,
 } from '@react-navigation/native';
 import HomeTabs from './HomeTabs';
+import {Button} from 'react-native';
+import Play from '@/pages/views/Play';
 
 export type BottomTabParamList = {
   HomeTabs: undefined;
   Listen: undefined;
+  Play: undefined;
   Found: undefined;
   Account: undefined;
 };
@@ -96,6 +100,19 @@ class BottomTabs extends React.Component<IProps, any> {
               <Icon name="icon-shoucang" color={color} size={size} />
             ),
           }}
+        />
+        <Tab.Screen
+          name="Play"
+          component={Play}
+          options={({navigation}) => ({
+            tabBarButton: () => {
+              return (
+                <Play
+                  onPress={() => navigation.navigate('ListDetail', {id: '123'})}
+                />
+              );
+            },
+          })}
         />
         <Tab.Screen
           name="Found"

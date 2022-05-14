@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {StyleSheet, View, StyleProp, ViewProps} from 'react-native';
 import BarrageItem from './BarrageItem';
 
-interface Message {
+export interface Message {
   id: number;
   title: string;
 }

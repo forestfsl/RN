@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {Dimensions, StatusBar} from 'react-native';
-import {NavigationState} from '@react-navigation/native';
+import {
+  NavigationContainerRef,
+  NavigationState,
+} from '@react-navigation/native';
+import React from 'react';
+import {ModalStackParamList} from '@/navigator/index';
 
 const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
 
@@ -33,6 +38,14 @@ function getActiveRouteName(state: NavigationState) {
   return route.name;
 }
 
+const navigationRef = React.createRef<NavigationContainerRef>();
+
+function navigate(name: keyof ModalStackParamList, params?: any) {
+  if (navigationRef.current) {
+    navigationRef.current.navigate(name, params);
+  }
+}
+
 export {
   statusBarHeight,
   viewportWidth,
@@ -41,4 +54,6 @@ export {
   hp,
   getActiveRouteName,
   formatTime,
+  navigationRef,
+  navigate,
 };

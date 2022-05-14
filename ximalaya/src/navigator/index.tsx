@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import {NavigationContainer, RouteProp} from '@react-navigation/native';
+import {NavigationContainer, NavigationState, RouteProp} from '@react-navigation/native';
 import Icon from '@/assets/iconfont/index';
 // import {
 //   createNativeStackNavigator,
@@ -15,7 +15,7 @@ import {
   TransitionPresets,
 } from '@react-navigation/stack';
 
-import {statusBarHeight} from '@/utils/index';
+import {getActiveRouteName, navigationRef, statusBarHeight} from '@/utils/index';
 
 import BottomTabs from '@/navigator/BottomTabs';
 import Detail from '@/pages/Detail';
@@ -24,6 +24,7 @@ import Category from '@/pages/Category';
 import Album from '@/pages/Album';
 import Animated from 'react-native-reanimated';
 import ListDetail from '@/pages/ListDetail/index';
+import PlayView from '@/pages/views/PlayView';
 
 export type RootStackParamList = {
   BottomTabs: {
@@ -194,11 +195,30 @@ function ModalStackScreen() {
   );
 }
 
-class Navigator extends React.Component {
+interface IState {
+  navigationState: NavigationState | undefined;
+}
+
+class Navigator extends React.Component<IState> {
+  state = {
+    navigationState: undefined,
+  };
+
+  onStateChange = (state: NavigationState | undefined) => {
+    this.setState({
+      navigationState: state,
+    });
+  };
   render() {
+    let activeScreenName = '';
+    const {navigationState} = this.state;
+    if (navigationState !== undefined) {
+      activeScreenName = getActiveRouteName(navigationState);
+    }
     return (
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef}>
         <ModalStackScreen />
+        <PlayView activeScreenName={activeScreenName} />
       </NavigationContainer>
     );
   }

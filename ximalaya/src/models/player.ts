@@ -6,6 +6,7 @@ import {
   play,
   getCurrentTime,
   stop,
+  sound,
   getDuration,
 } from '@/config/sound';
 import axios from 'axios';
@@ -20,6 +21,9 @@ const SHOW_URL = '/mock/11/forest/show';
 export interface PlayModelState {
   id: string;
   title: string;
+  thumbnailUrl: string;
+  sliderEditing: boolean;
+  percent: number;
   soundUrl: string;
   playState: string;
   currentTime: number;
@@ -65,6 +69,9 @@ export interface PlayerModel extends Model {
 const initialState: PlayModelState = {
   id: '',
   soundUrl: '',
+  thumbnailUrl: '',
+  sliderEditing: false,
+  percent: 0,
   playState: '',
   currentTime: 0,
   duration: 0,
@@ -79,19 +86,28 @@ const playerModel: PlayerModel = {
   state: initialState,
   reducers: {
     setState(state, {payload}) {
-      return {
+      const newState = {
         ...state,
         ...payload,
       };
+      const percent =
+        (newState.currentTime / newState.duration ? newState.duration : 0) *
+        100;
+      newState.percent = percent;
+      return newState;
     },
   },
   effects: {
     *fetchShow({payload}, {call, put}) {
+      console.log('fetchShow');
+      if (sound) {
+        yield call(stop);
+        sound.stop();
+      }
       const {data} = yield call(axios.get, SHOW_URL, {
         params: {id: payload.id},
       });
-      // console.log('fetchData', data);
-      // yield call(stop);
+      console.log('fetchData', data);
       try {
         yield call(initPlayer, data.soundUrl);
       } catch (error) {
@@ -102,6 +118,7 @@ const playerModel: PlayerModel = {
         payload: {
           id: payload.id,
           soundUrl: data.soundUrl,
+          thumbnailUrl: data.thumbnailUrl,
           duration: getDuration(),
         },
       });
@@ -149,7 +166,6 @@ const playerModel: PlayerModel = {
       {type: 'watcher'},
     ],
     *previous({payload}, {call, put, select}) {
-      yield call(stop);
       const {id, sounds}: PlayModelState = yield select(
         ({player}: RootState) => player,
       );
@@ -176,7 +192,6 @@ const playerModel: PlayerModel = {
       });
     },
     *next({payload}, {call, put, select}) {
-      yield call(stop);
       const {id, sounds}: PlayModelState = yield select(
         ({player}: RootState) => player,
       );
