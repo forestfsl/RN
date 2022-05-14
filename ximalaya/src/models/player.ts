@@ -100,14 +100,14 @@ const playerModel: PlayerModel = {
   effects: {
     *fetchShow({payload}, {call, put}) {
       console.log('fetchShow');
-      if (sound) {
-        yield call(stop);
-        sound.stop();
-      }
       const {data} = yield call(axios.get, SHOW_URL, {
         params: {id: payload.id},
       });
       console.log('fetchData', data);
+      if (sound) {
+        yield call(stop);
+        sound.stop();
+      }
       try {
         yield call(initPlayer, data.soundUrl);
       } catch (error) {
@@ -119,6 +119,7 @@ const playerModel: PlayerModel = {
           id: payload.id,
           soundUrl: data.soundUrl,
           thumbnailUrl: data.thumbnailUrl,
+          currenTime: 0,
           duration: getDuration(),
         },
       });
