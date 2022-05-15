@@ -242,14 +242,14 @@ PODS:
     - React
   - RNGestureHandler (1.10.3):
     - React-Core
-  - RNReanimated (1.13.3):
+  - RNReanimated (1.13.4):
     - React-Core
   - RNScreens (2.18.1):
     - React-Core
-  - RNSound (0.11.1):
+  - RNSound (0.11.2):
     - React-Core
-    - RNSound/Core (= 0.11.1)
-  - RNSound/Core (0.11.1):
+    - RNSound/Core (= 0.11.2)
+  - RNSound/Core (0.11.2):
     - React-Core
   - RNSVG (11.0.1):
     - React
@@ -401,8 +401,8 @@ SPEC CHECKSUMS:
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
   react-native-blur: cad4d93b364f91e7b7931b3fa935455487e5c33c
   react-native-config: f2c2ae45625a068c35681a16b9bfb1ca58b0adc7
-  react-native-safe-area-context: 8260e5157617df4b72865f44006797f895b2ada7
-  react-native-video: 77ce22be7abff9e373527ca10106a99dea3ba56c
+  react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
+  react-native-video: a4c2635d0802f983594b7057e1bce8f442f0ad28
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
   React-RCTBlob: d89293cc0236d9cb0933d85e430b0bbe81ad1d72
@@ -414,12 +414,12 @@ SPEC CHECKSUMS:
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
   RealmJS: 16eb794ce5490cf2981372167ac6a6c45f989a4e
-  RNCAsyncStorage: cb9a623793918c6699586281f0b51cbc38f046f9
-  RNCMaskedView: f127cd9652acfa31b91dcff613e07ba18b774db6
+  RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
+  RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
-  RNReanimated: 514a11da3a2bcc6c3dfd9de32b38e2b9bf101926
+  RNReanimated: c1b56d030d1616239861534d9adb531f8cffab68
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
-  RNSound: 9253013eeaa051eab63d354fd4654f7aa67c82f0
+  RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNSVG: 67f1f12dae2cef6ed59a42cae74a6b8f5a9e7b46
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
