@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import {saveProgram} from '@/config/realm';
 import {
   initPlayer,
   pause,
@@ -98,7 +99,7 @@ const playerModel: PlayerModel = {
     },
   },
   effects: {
-    *fetchShow({payload}, {call, put}) {
+    *fetchShow({payload}, {call, put, select}) {
       console.log('fetchShow');
       const {data} = yield call(axios.get, SHOW_URL, {
         params: {id: payload.id},
@@ -126,6 +127,19 @@ const playerModel: PlayerModel = {
       yield put({
         type: 'play',
       });
+      const {
+        id,
+        title,
+        thumbnailUrl,
+        currentTime,
+      }: PlayModelState = yield select(({player}: RootState) => player);
+      saveProgram({
+        id,
+        title,
+        thumbnailUrl,
+        currentTime,
+        duration: getDuration(),
+      });
     },
     *play({payload}, {call, put}) {
       yield put({
@@ -147,7 +161,7 @@ const playerModel: PlayerModel = {
         },
       });
     },
-    *pause({payload}, {call, put}) {
+    *pause({payload}, {call, put, select}) {
       yield call(pause);
       yield put({
         type: 'setState',
@@ -155,6 +169,10 @@ const playerModel: PlayerModel = {
           playState: 'paused',
         },
       });
+      const {id, currentTime}: PlayModelState = yield select(
+        ({player}: RootState) => player,
+      );
+      saveProgram({id, currentTime});
     },
     watcherCurrentTime: [
       function*(sagaEffects) {

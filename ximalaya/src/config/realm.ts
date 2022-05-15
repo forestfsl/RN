@@ -1,17 +1,33 @@
 import Realm from 'realm';
 
-class Show {
+export interface IProgram {
+  id: string;
+  title: string;
+  thumbnailUrl: string;
+  currentTime: number;
+  duration: number;
+  rate: number;
+}
+
+class Program {
+  currentTime = 0;
+  duration = 0;
   static schema = {
-    name: 'Show',
+    name: 'Program',
     primaryKey: 'id',
     properties: {
       id: 'string',
       title: 'string',
       thumbnailUrl: 'string',
-      playSeconds: {type: 'double', default: 0},
+      currentTime: {type: 'double', default: 0},
       duration: {type: 'double', default: 0},
     },
   };
+  get rate() {
+    return this.duration > 0
+      ? Math.floor(((this.currentTime * 100) / this.duration) * 100) / 100
+      : 0;
+  }
 }
 
 // 第一个架构将会被更新到现有的架构版本
@@ -34,6 +50,16 @@ class Show {
 // 使用最新的架构打开 Realm 数据库
 // var realm = new Realm(schemas[schemas.length - 1]);
 
-const realm = new Realm({schema: [Show], schemaVersion: 1});
+const realm = new Realm({schema: [Program], schemaVersion: 1});
+
+export function saveProgram(data: Partial<IProgram>) {
+  try {
+    realm.write(() => {
+      realm.create('Program', data, true);
+    });
+  } catch (error) {
+    console.log('保存失败');
+  }
+}
 
 export default realm;
