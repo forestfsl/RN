@@ -14,6 +14,8 @@ import {FlatList} from 'react-native-gesture-handler';
 import {itemWidth} from './Category';
 import Icon from '@/assets/iconfont';
 import {formatTime} from '../utils';
+import Touchable from '@/components/Touchable';
+import IconHuanyipi from '@/assets/iconfont/IconHuanyipi';
 
 interface IProps {
   navigation: RootStackNavigation;
@@ -26,7 +28,13 @@ class Listen extends React.Component<IProps> {
       id: 100,
     });
   };
-
+  delete = (item: IProgram) => {
+    realm.write(() => {
+      const program = realm.objects('Program').filtered(`id='${item.id}'`);
+      realm.delete(program);
+      this.setState({});
+    });
+  };
   renderItem = ({item}: ListRenderItemInfo<IProgram>) => {
     return (
       <View style={styles.item}>
@@ -39,6 +47,13 @@ class Listen extends React.Component<IProps> {
             <Text style={styles.rate}>已播:{item.rate}%</Text>
           </View>
         </View>
+        <Touchable
+          style={styles.deleteBtn}
+          onPress={() => {
+            this.delete(item);
+          }}>
+          <IconHuanyipi />
+        </Touchable>
       </View>
     );
   };
@@ -82,6 +97,10 @@ const styles = StyleSheet.create({
   rate: {
     marginLeft: 10,
     color: '#f6a624',
+  },
+  deleteBtn: {
+    padding: 10,
+    justifyContent: 'center',
   },
 });
 

@@ -107,7 +107,6 @@ const playerModel: PlayerModel = {
       console.log('fetchData', data);
       if (sound) {
         yield call(stop);
-        sound.stop();
       }
       try {
         yield call(initPlayer, data.soundUrl);
@@ -201,6 +200,7 @@ const playerModel: PlayerModel = {
           title: currentItem ? currentItem.title : '',
           previousId: previousItem ? previousItem.id : '',
           nextId: id ? id : '',
+          currenTime: 0,
         },
       });
       yield put({
@@ -226,6 +226,7 @@ const playerModel: PlayerModel = {
           title: currentItem ? currentItem.title : '',
           previousId: id,
           nextId: nextItem ? nextItem.id : '',
+          currenTime: 0,
         },
       });
       yield put({

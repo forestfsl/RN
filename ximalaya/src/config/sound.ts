@@ -62,7 +62,6 @@ const stop = () => {
     } else {
       reject();
     }
-    sound.release();
   });
 };
 
