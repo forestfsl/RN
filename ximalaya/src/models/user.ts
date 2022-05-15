@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
-import {Effect, Model} from 'dva-core-ts';
+import {Effect, Model, SubscriptionsMapObject} from 'dva-core-ts';
 import {Alert} from 'react-native';
 import {Reducer} from 'redux';
 import {goBack} from '@/utils/index';
+import storage, {load} from '@/config/storage';
 
 const USER_URL = '/mock/11/forest/login';
 
@@ -22,10 +23,12 @@ export interface UserModel extends Model {
   effects: {
     login: Effect;
     logout: Effect;
+    loadStorage: Effect;
   };
   reducers: {
     setState: Reducer<UserModelState>;
   };
+  subscriptions: SubscriptionsMapObject;
 }
 
 const initialState = {
@@ -54,6 +57,10 @@ const userModel: UserModel = {
           },
         });
         console.log('登录成功');
+        storage.save({
+          key: 'user',
+          data,
+        });
         goBack();
       } else {
         console.log(msg);
@@ -66,6 +73,29 @@ const userModel: UserModel = {
           user: undefined,
         },
       });
+      storage.save({
+        key: 'user',
+        data: null,
+      });
+    },
+    *loadStorage(_, {call, put}) {
+      try {
+        const user = yield call(load, {key: 'user'});
+        yield put({
+          type: 'setState',
+          payload: {
+            loging: true,
+            user: user,
+          },
+        });
+      } catch (error) {
+        console.log('保存用户信息错误', error);
+      }
+    },
+  },
+  subscriptions: {
+    setup({dispatch}) {
+      dispatch({type: 'loadStorage'});
     },
   },
 };
