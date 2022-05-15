@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import {NavigationContainer, NavigationState, RouteProp} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  NavigationState,
+  RouteProp,
+} from '@react-navigation/native';
 import Icon from '@/assets/iconfont/index';
 // import {
 //   createNativeStackNavigator,
@@ -11,11 +15,16 @@ import {
   CardStyleInterpolators,
   createStackNavigator,
   HeaderStyleInterpolators,
+  HeaderTitle,
   StackNavigationProp,
   TransitionPresets,
 } from '@react-navigation/stack';
 
-import {getActiveRouteName, navigationRef, statusBarHeight} from '@/utils/index';
+import {
+  getActiveRouteName,
+  navigationRef,
+  statusBarHeight,
+} from '@/utils/index';
 
 import BottomTabs from '@/navigator/BottomTabs';
 import Detail from '@/pages/Detail';
@@ -25,6 +34,7 @@ import Album from '@/pages/Album';
 import Animated from 'react-native-reanimated';
 import ListDetail from '@/pages/ListDetail/index';
 import PlayView from '@/pages/views/PlayView';
+import Login from '@/pages/Login';
 
 export type RootStackParamList = {
   BottomTabs: {
@@ -149,6 +159,7 @@ export type ModalStackParamList = {
   ListDetail: {
     id: string;
   };
+  Login: undefined;
 };
 
 const ModalStack = createStackNavigator<ModalStackParamList>();
@@ -167,6 +178,7 @@ function ModalStackScreen() {
         headerTitleAlign: 'center',
         headerStatusBarHeight: statusBarHeight,
         headerBackTitleVisible: false,
+        headerTintColor: '#333',
       })}>
       <ModalStack.Screen
         name="Root"
@@ -189,6 +201,13 @@ function ModalStackScreen() {
               style={styles.headerBackImage}
             />
           ),
+        }}
+      />
+      <ModalStack.Screen
+        name="Login"
+        component={Login}
+        options={{
+          headerTitle: '登录',
         }}
       />
     </ModalStack.Navigator>
