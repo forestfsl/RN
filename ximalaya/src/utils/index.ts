@@ -46,6 +46,10 @@ function navigate(name: keyof ModalStackParamList, params?: any) {
   }
 }
 
+function goBack() {
+  navigationRef.current?.goBack();
+}
+
 export {
   statusBarHeight,
   viewportWidth,
@@ -56,4 +60,5 @@ export {
   formatTime,
   navigationRef,
   navigate,
+  goBack,
 };

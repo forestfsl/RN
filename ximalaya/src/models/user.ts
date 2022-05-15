@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Effect, Model} from 'dva-core-ts';
 import {Alert} from 'react-native';
 import {Reducer} from 'redux';
+import {goBack} from '@/utils/index';
 
 const USER_URL = '/mock/11/forest/login';
 
@@ -53,6 +54,7 @@ const userModel: UserModel = {
           },
         });
         console.log('登录成功');
+        goBack();
       } else {
         console.log(msg);
       }
