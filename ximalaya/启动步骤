@@ -1,0 +1,8 @@
+#### 启动项目步骤
+1.cd /Users/fengsonglin/my-yapi && node vendors/server/app.js
+2.sudo /usr/sbin/httpd -k start 开启apache(部署的目录在/Library/WebServer/Documents，更改了索引Indexes),参考链接http://t.zoukankan.com/itafter-p-4246728.html，使用sudo apachectl start 没有报错，这里是一个坑，语法有可能错了，建议使用sudo /usr/sbin/httpd -k start
+3.cd /Users/fengsonglin/tech/RN/ximalaya && react-native run-ios (需要提前打开指定的模拟器，否则会报ShutDown的错误)
+
+
+@note
+记得播放视频兼容安卓和iOS需要安装react-native-video-custom-controls
