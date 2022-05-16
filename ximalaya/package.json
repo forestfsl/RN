@@ -47,6 +47,7 @@
     "react-native-svg": "^11.0.1",
     "react-native-tab-view": "^2.13.0",
     "react-native-video": "^5.0.2",
+    "react-native-video-player": "https://github.com/superchenwb/react-native-video-player.git",
     "react-native-video-custom-controls": "^0.1.0",
     "react-navigation-header-buttons": "^3.0.5",
     "react-redux": "^7.2.0",
