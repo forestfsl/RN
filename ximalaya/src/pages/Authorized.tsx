@@ -1,3 +1,4 @@
+/* eslint-disable no-unreachable */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import {RootState} from '@/models/index';
@@ -8,7 +9,7 @@ import defaultAvatarImg from '@/assets/default_avatar.png';
 import {navigate} from '@/utils/index';
 
 interface IProps {
-  authority: boolean;
+  authority: Boolean;
   noMatch?: () => JSX.Element;
 }
 
@@ -20,15 +21,19 @@ class Authorized extends React.Component<IProps> {
   render() {
     const {children, authority, noMatch} = this.props;
     if (authority) {
+      console.log('authority', authority);
       return children;
     }
-    return this.renderNoMatch;
+    return this.renderNoMatch();
   }
 
   renderNoMatch = () => {
+    console.log('renderNoMatch', this.props.noMatch);
     if (this.props.noMatch) {
+      console.log('进入垃圾');
       return <View>{this.props.noMatch()}</View>;
     }
+    console.log('登录后自动同步所有记录哦~');
     return (
       <View style={styles.loginView}>
         <Image source={defaultAvatarImg} style={styles.avatar} />

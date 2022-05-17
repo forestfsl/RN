@@ -5,6 +5,7 @@ import {Alert} from 'react-native';
 import {Reducer} from 'redux';
 import {goBack} from '@/utils/index';
 import storage, {load} from '@/config/storage';
+import Toast from 'react-native-root-toast';
 
 const USER_URL = '/mock/11/forest/login';
 
@@ -63,6 +64,10 @@ const userModel: UserModel = {
         });
         goBack();
       } else {
+        Toast.show(msg, {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.CENTER,
+        });
         console.log(msg);
       }
     },

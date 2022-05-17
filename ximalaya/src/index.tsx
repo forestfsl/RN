@@ -21,12 +21,16 @@ import {Provider} from 'react-redux';
 import store from '@/config/dva';
 import {StatusBar} from 'react-native';
 import '@/config/http';
+import {RootSiblingParent} from 'react-native-root-siblings';
 
 export default class extends React.Component<any, any> {
   render() {
     return (
       <Provider store={store}>
-        <Navigator />
+        <RootSiblingParent>
+          <Navigator />
+        </RootSiblingParent>
+
         <StatusBar
           backgroundColor="transparent"
           barStyle="dark-content"

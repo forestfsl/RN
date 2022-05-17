@@ -46,6 +46,7 @@ class Login extends React.Component<ModelState> {
     });
   };
   render() {
+    const {loading} = this.props;
     return (
       <ScrollView keyboardShouldPersistTaps="handled">
         <Text style={styles.logo}>听书</Text>
@@ -66,7 +67,10 @@ class Login extends React.Component<ModelState> {
                   placeholder="请输入密码"
                   component={Input}
                 />
-                <Touchable onPress={handleSubmit} style={styles.loginBtn}>
+                <Touchable
+                  disabled={loading}
+                  onPress={handleSubmit}
+                  style={styles.loginBtn}>
                   <Text style={styles.loginBtnText}>登录</Text>
                 </Touchable>
               </View>

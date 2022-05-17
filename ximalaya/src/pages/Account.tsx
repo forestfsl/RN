@@ -53,17 +53,7 @@ class Account extends React.Component<IProps> {
         </View>
       </Authorized>
     )
-    return (
-      <View style={styles.loginView}>
-        <Image source={defaultAvatarImg} style={styles.avatar} />
-        <View style={styles.right}>
-          <Touchable style={styles.loginBtn} onPress={this.onPress}>
-            <Text style={styles.loginBtnText}>立即登录</Text>
-          </Touchable>
-          <Text style={styles.tip}>登录后自动同步所有记录哦~</Text>
-        </View>
-      </View>
-    );
+   
   }
 }
 
