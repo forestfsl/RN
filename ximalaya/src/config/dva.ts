@@ -1,3 +1,4 @@
+/* eslint-disable no-labels */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {create} from 'dva-core-ts';
 import createLoading from 'dva-loading-ts';
@@ -5,9 +6,18 @@ import models from '@/models/index';
 import modelExtend from 'dva-model-extend';
 import homeModel from '@/models/home';
 import {Model} from 'dva-core-ts';
+import Toast from 'react-native-root-toast';
 
 //1.创建实例
 const app = create();
+// onError: (e) => {
+//   Toast.show('网络异常', {
+//     duration: Toast.durations.LONG,
+//     position: Toast.positions.CENTER,
+//     shadow: true,
+//     animation: true,
+//   });
+// };
 //2.加载model对象
 for (let model of models) {
   app.model(model);
