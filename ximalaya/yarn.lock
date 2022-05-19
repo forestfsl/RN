@@ -1813,7 +1813,7 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-app-info-parser@^0.3.8:
+app-info-parser@^0.3.13:
   version "0.3.13"
   resolved "https://registry.npmmirror.com/app-info-parser/-/app-info-parser-0.3.13.tgz#9be26c2aa9e1ad870b54bffba991fa540fe18fb9"
   integrity sha512-u8IB/jQS7vG3vA06722T43mFmLWnP5HhkGt3auUgpdH9ZVTX0UdLvW+ZsVKOK1Uq+1WNuB/up6vbkQfO/9x4TQ==
@@ -6833,6 +6833,11 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.npm.taobao.org/punycode/download/punycode-2.1.1.tgz"
   integrity sha1-tYsBCsQMIsVldhbI0sLALHv0eew=
 
+qrcode-terminal@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.npmmirror.com/qrcode-terminal/-/qrcode-terminal-0.12.0.tgz#bb5b699ef7f9f0505092a3748be4464fe71b5819"
+  integrity sha512-EXtzRZmC+YGmGlDFbXKxQiMZNwCLEO6BANKXG4iCtSIM0yqc/pappSx3RIKr4r0uh5JsBckOXeKrB3Iz7mdQpQ==
+
 qs@^6.1.0:
   version "6.10.3"
   resolved "https://registry.npmmirror.com/qs/-/qs-6.10.3.tgz#d6cde1b2ffca87b5aa57889816c5f81535e22e8e"
@@ -7052,14 +7057,15 @@ react-native-tab-view@^2.13.0:
   resolved "https://registry.npmmirror.com/react-native-tab-view/-/react-native-tab-view-2.16.0.tgz#cae72c7084394bd328fac5fefb86cd966df37a86"
   integrity sha512-ac2DmT7+l13wzIFqtbfXn4wwfgtPoKzWjjZyrK1t+T8sdemuUvD4zIt+UImg03fu3s3VD8Wh/fBrIdcqQyZJWg==
 
-react-native-upload@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmmirror.com/react-native-upload/-/react-native-upload-1.0.0.tgz#75552dbcc848acd7817c114ad6e43f8dc4c06753"
-  integrity sha512-NM0jlhf3uSN6Bj4xi/N8ZSTpqw0SrojSfC/HzJPakWt9EbFwzsdgJx/ooRCekM4M6575uy0QxXfu91FgYRl1mA==
+react-native-upload@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.npmmirror.com/react-native-upload/-/react-native-upload-2.2.1.tgz#561bc0852fc80857d24bdcc5c38aa2598bb130e1"
+  integrity sha512-Acqe7qP+BPBsOQtT1hBa0LDS0fFockTwcQNlFZucya12GP1SIIhaDnIaiVVWZ2gnCICdllYhUzdXvA+LlLY9ig==
   dependencies:
-    app-info-parser "^0.3.8"
+    app-info-parser "^0.3.13"
     colors "^1.4.0"
-    minimist "^1.2.0"
+    minimist "^1.2.5"
+    qrcode-terminal "^0.12.0"
 
 react-native-video-custom-controls@^0.1.0:
   version "0.1.0"
