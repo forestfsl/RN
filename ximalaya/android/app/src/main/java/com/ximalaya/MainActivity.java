@@ -2,6 +2,7 @@ package com.ximalaya;
 
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;
+import org.devio.rn.splashscreen.SplashScreen;
 
 public class MainActivity extends ReactActivity {
 
@@ -16,7 +17,9 @@ public class MainActivity extends ReactActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(null);
+    //显示启动屏，第二个参数就是我们自定义主题的引用
+    SplashScreen.show(this,R.style.SplashScreenTheme,true);
+    super.onCreate(savedInstanceState);
   }
 }
 

@@ -67,6 +67,18 @@ MYAPP_RELEASE_KEY_PASSWORD=123456
     - 2.安装打包脚本  yarn add react-native-upload -D 
         npx upload-init 会在根目录生成一个upload.json
         npx upload-build(如果只想android的，需要加上--no-ios)
+        应该会报没有index.android.js 这个时候手动拷贝index.js index.android.js 然后重新执行
+        npx upload-build --no-ios
+        ```
+        BUILD SUCCESSFUL in 1m 37s
+394 actionable tasks: 302 executed, 92 up-to-date
+/Users/fengsonglin/tech/RN/ximalaya
+
+[Builder] Ios is skipped.
+
+
+[Builder] View apk file at: ./android/app/build/outputs/apk/release/app-release.apk
+        ```
     
     #### android 编译错误
     Required by:
@@ -74,4 +86,12 @@ MYAPP_RELEASE_KEY_PASSWORD=123456
 
 * Try:
 Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.
-yarn add react-native-video@5.1.0
+
+@note 打开android studio 需要 终端open -a /Applications/Android\ Studio.app
+
+
+
+#### 白屏避免
+yarn add react-native-splash-screen
+
+如果是安卓，需要创建布局文件layout-layout_screen.ximalaya res里面需要添加资源文件

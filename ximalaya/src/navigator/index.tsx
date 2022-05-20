@@ -35,6 +35,7 @@ import Animated from 'react-native-reanimated';
 import ListDetail from '@/pages/ListDetail/index';
 import PlayView from '@/pages/views/PlayView';
 import Login from '@/pages/Login';
+import SplashScreen from 'react-native-splash-screen';
 
 export type RootStackParamList = {
   BottomTabs: {
@@ -222,6 +223,10 @@ class Navigator extends React.Component<IState> {
   state = {
     navigationState: undefined,
   };
+
+  componentDidMount() {
+    SplashScreen.hide();
+  }
 
   onStateChange = (state: NavigationState | undefined) => {
     this.setState({
