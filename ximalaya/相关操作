@@ -117,3 +117,67 @@ Download url: https://static.realm.io/downloads/sync/realm-sync-cocoa-4.9.5.tar.
 
 destination path: /var/folders/9t/yctmsc6x64qb6ybltcnfkx1w0000gn/T/6a8007d77283d97e74ef56fa2e11ee828a2a3ab4/realm-sync-cocoa-4.9.5.tar.gz
 
+
+####codepush 操作
+- 1. 安装codepush
+npm install -g code-push-cli
+
+- 2. 创建一个CodePush账号
+code-push register
+```
+Authentication succeeded
+Please copy and paste this token to the command window:
+32d7256dbd8049fc1a9fa460b6fb4623e31dceff
+32d7256dbd8049fc1a9fa460b6fb4623e31dceff
+After doing so, please close this browser tab.
+```
+- 3. code-push login 进行登录，登录成功后，你的session文件将会写在/Users/用户名/.code-push.config
+
+- 4.codepush 服务器注册app
+```
+code-push app add ximalaya-Android android react-native
+
+┌────────────┬───────────────────────────────────────┐
+│ Name       │ Deployment Key                        │
+├────────────┼───────────────────────────────────────┤
+│ Production │ Lqo8qTFuzo5VueT37VcFWuww_CY6pvkBkDkKD │
+├────────────┼───────────────────────────────────────┤
+│ Staging    │ z_UdwYr_44sKgiMShGq-t2O8KDNf60eCNi4Yh │
+└────────────┴───────────────────────────────────────┘
+
+code-push app add ximalaya-iOS iOS react-native
+┌────────────┬───────────────────────────────────────┐
+│ Name       │ Deployment Key                        │
+├────────────┼───────────────────────────────────────┤
+│ Production │ ft-TVRVgaCxoFyEZRpY1Y4C8fDJmo1JGnpLmx │
+├────────────┼───────────────────────────────────────┤
+│ Staging    │ 4-ArJ9m3wV5YGspYXGA02yjGDAy6VGHPt3iEb │
+└────────────┴───────────────────────────────────────┘
+```
+
+PS: 相关命令
+code-push login 登录
+code-push logout 注销
+code-push access-key ls 列出登录的token
+code-push access-key rm <accessKey> 删除某个access-key
+
+code-push app remove 移除一个app
+code-push app rename 重命名一个存在app
+code-push app list 或者ls 列出账号下面的所有app
+
+
+#### Android 中集成Code Push
+- 1. 在项目中安装react-native-code-push插件
+npm install --save react-native-code-push 或者 yarn add react-native-code-push
+- 2 安卓project中安装插件
+codepush 提供两种方式:rnpm 和Manual
+npm i -g rnpm
+- 3 rnpm link react-native-code-push 
+如果上面指令不行，执行
+~/tech/RN/ximalaya   master ±  react-native link react-native-code-push
+(node:83240) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+info Linking "react-native-code-push" iOS dependency
+info iOS module "react-native-code-push" has been successfully linked
+info Linking "react-native-code-push" Android dependency
+info Android module "react-native-code-push" has been successfully linked
