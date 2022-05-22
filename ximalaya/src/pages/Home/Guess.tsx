@@ -57,7 +57,7 @@ class Guess extends React.Component<IProps> {
         <View style={styles.header}>
           <View style={{flexDirection: 'row'}}>
             <Icon name="icon-xihuan" />
-            <Text style={styles.headerTitle}>猜你喜欢</Text>
+            <Text style={styles.headerTitle}>猜你喜欢我</Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text style={styles.moreTitle}>更多</Text>

@@ -36,6 +36,7 @@ import ListDetail from '@/pages/ListDetail/index';
 import PlayView from '@/pages/views/PlayView';
 import Login from '@/pages/Login';
 import SplashScreen from 'react-native-splash-screen';
+import CodePushPage from '@/pages/CodePushPage';
 
 export type RootStackParamList = {
   BottomTabs: {
@@ -55,6 +56,7 @@ export type RootStackParamList = {
   ListDetail: {
     id: string;
   };
+  CodePushPage: undefined;
 };
 
 function getAlbumOptions({
@@ -150,7 +152,7 @@ function RootStackScreen() {
         component={Album}
         options={getAlbumOptions}
       />
-      {/* <Stack.Screen name={'ListDetail'} component={ListDetail} /> */}
+      <Stack.Screen name={'CodePushPage'} component={CodePushPage} />
     </Stack.Navigator>
   );
 }
@@ -161,6 +163,7 @@ export type ModalStackParamList = {
     id: string;
   };
   Login: undefined;
+  CodePushPage: undefined;
 };
 
 const ModalStack = createStackNavigator<ModalStackParamList>();

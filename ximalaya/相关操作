@@ -181,3 +181,101 @@ info Linking "react-native-code-push" iOS dependency
 info iOS module "react-native-code-push" has been successfully linked
 info Linking "react-native-code-push" Android dependency
 info Android module "react-native-code-push" has been successfully linked
+
+https://juejin.cn/post/6844904073309716494
+http://microsoft.github.io/code-push/
+https://www.jianshu.com/p/6a5e00d22723
+
+
+#### code push 发布更新
+-  如果使用二合一的打包发布，则里面的第三步不需要处理
+production:
+code-push release-react ximalaya-Android android --t 1.0.0 --dev true --d Production --des "1.测试热更新" --m true
+staging:
+code-push release-react ximalaya-Android android --t 1.0.0 --dev true --d Staging --des "1.测试热更新" --m true
+ ```
+ ~/tech/RN/ximalaya   master  code-push release-react ximalaya-Android android --t
+ 1.0.0 --dev true --d Production --des "1.测试热更新" --m true
+
+   ╔══════════════════════════════════════════════════════════════════╗
+   ║                                                                  ║
+   ║       CodePush-CLI is deprecated and no longer supported!        ║
+   ║                You can use AppCenter-CLI instead.                ║
+   ║   More details: https://docs.microsoft.com/en-us/appcenter/cli   ║
+   ║                                                                  ║
+   ╚══════════════════════════════════════════════════════════════════╝
+
+(node:711) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+Running "react-native bundle" command:
+
+node node_modules/react-native/local-cli/cli.js bundle --assets-dest /var/folders/9t/yctmsc6x64qb6ybltcnfkx1w0000gn/T/CodePush/CodePush --bundle-output /var/folders/9t/yctmsc6x64qb6ybltcnfkx1w0000gn/T/CodePush/CodePush/index.android.bundle --dev true --entry-file index.android.js --platform android
+Loading dependency graph, done.
+
+info Writing bundle output to:, /var/folders/9t/yctmsc6x64qb6ybltcnfkx1w0000gn/T/CodePush/CodePush/index.android.bundle
+info Done writing bundle output
+info Copying 51 asset files
+info Done copying assets
+
+Releasing update contents to CodePush:
+
+Upload progress:[==================================================] 100% 0.0s
+Successfully released an update containing the "/var/folders/9t/yctmsc6x64qb6ybltcnfkx1w0000gn/T/CodePush/CodePush" directory to the "Production" deployment of the "ximalaya-Android" app.
+ ```
+ - 2 查看
+ ```
+  ~/tech/RN/ximalaya   master  code-push deployment ls ximalaya-Android
+(node:1047) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+┌────────────┬─────────────────────────────────┬──────────────────────┐
+│ Name       │ Update Metadata                 │ Install Metrics      │
+├────────────┼─────────────────────────────────┼──────────────────────┤
+│ Production │ Label: v1                       │ No installs recorded │
+│            │ App Version: 1.0.0              │                      │
+│            │ Mandatory: Yes                  │                      │
+│            │ Release Time: 4 minutes ago     │                      │
+│            │ Released By: 756613301@qq.com   │                      │
+│            │ Description: 1.测试热更新            │                      │
+├────────────┼─────────────────────────────────┼──────────────────────┤
+│ Staging    │ Label: v1                       │ No installs recorded │
+│            │ App Version: 1.0.0              │                      │
+│            │ Mandatory: Yes                  │                      │
+│            │ Release Time: a few seconds ago │                      │
+│            │ Released By: 756613301@qq.com   │                      │
+│            │ Description: 1.测试热更新            │                      │
+└────────────┴─────────────────────────────────┴──────────────────────┘
+ ~/tech/RN/ximalaya   master 
+ ```
+ - 3 创建bundles目录
+mkdir bundles
+```
+lar dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+Loading dependency graph, done.
+info Writing bundle output to:, ./bundles/ios/main.jsbundle
+info Done writing bundle output
+info Copying 49 asset files
+info Done copying assets
+ ~/tech/RN/ximalaya   master  react-native bundle --entry-file index.js --bundle-output ./bundles/android/index.android.bundle --platform android --assets-dest ./bundles/android --dev true
+(node:2394) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+Loading dependency graph, done.
+info Writing bundle output to:, ./bundles/android/index.android.bundle
+info Done writing bundle output
+info Copying 51 asset files
+info Done copying assets
+ ~/tech/RN/ximalaya   master 
+```
+
+调试codepush的过程中，需要
+- (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
+{
+  return [CodePush bundleURL];
+//#if DEBUG
+//  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+//#else
+//  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+//  return [CodePush bundleURL];
+//#endif
+}
+另外需要将打包目录中的ios:main.jsbundle 和assets 拖拽到app中，选择文件夹引用即可folder reference

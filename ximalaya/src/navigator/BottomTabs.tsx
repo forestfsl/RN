@@ -15,6 +15,7 @@ import {
 import HomeTabs from './HomeTabs';
 import {Button} from 'react-native';
 import Play from '@/pages/views/Play';
+import CodePushPage from '@/pages/CodePushPage';
 
 export type BottomTabParamList = {
   HomeTabs: undefined;
@@ -22,6 +23,7 @@ export type BottomTabParamList = {
   Play: undefined;
   Found: undefined;
   Account: undefined;
+  CodePushPage: undefined;
 };
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 function getHeaderTitle(routeName: string | undefined) {
@@ -34,6 +36,8 @@ function getHeaderTitle(routeName: string | undefined) {
       return '发现';
     case 'Account':
       return '账号';
+    case 'CodePushPage':
+      return 'CodePush';
     default:
       return '';
   }
@@ -129,6 +133,16 @@ class BottomTabs extends React.Component<IProps, any> {
           component={Account}
           options={{
             tabBarLabel: '我的',
+            tabBarIcon: ({color, size}) => (
+              <Icon name="icon-user" color={color} size={size} />
+            ),
+          }}
+        />
+         <Tab.Screen
+          name="CodePushPage"
+          component={CodePushPage}
+          options={{
+            tabBarLabel: 'codePush',
             tabBarIcon: ({color, size}) => (
               <Icon name="icon-user" color={color} size={size} />
             ),

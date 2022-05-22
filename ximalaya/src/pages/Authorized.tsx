@@ -18,6 +18,10 @@ class Authorized extends React.Component<IProps> {
     navigate('Login');
   };
 
+  codePush = () => {
+    navigate('CodePushPage');
+  };
+
   render() {
     const {children, authority, noMatch} = this.props;
     if (authority) {
@@ -40,6 +44,9 @@ class Authorized extends React.Component<IProps> {
         <View style={styles.right}>
           <Touchable style={styles.loginBtn} onPress={this.onPress}>
             <Text style={styles.loginBtnText}>立即登录</Text>
+          </Touchable>
+          <Touchable style={styles.loginBtn} onPress={this.codePush}>
+            <Text style={styles.loginBtnText}>codePush</Text>
           </Touchable>
           <Text style={styles.tip}>登录后自动同步所有记录哦~</Text>
         </View>
